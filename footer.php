@@ -57,7 +57,7 @@
             <div class="footer-column">
                 <h3>Social</h3>
                 <ul>
-                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">X</a></li>
                     <li><a href="#">LinkedIn</a></li>
                     <li><a href="#">YouTube</a></li>
                     <li><a href="#">GitHub</a></li>
