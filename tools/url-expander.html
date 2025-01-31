@@ -1,28 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URL Expander & Virus Scan</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
-        input { width: 80%; padding: 10px; margin: 10px 0; }
-        button { padding: 10px 20px; cursor: pointer; }
-        .result { margin-top: 20px; text-align: left; display: inline-block; }
-        .loading { font-style: normal; color: gray; }
-        ul { text-align: left; }
-        #errorMessage {
-            color: white;
-            background-color: #d9534f; /* Bootstrap danger red */
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 10px;
-            display: none;
-        }
-
-    </style>
-</head>
-<body>
+<?php include "../header.php"; ?>
     <h2>Shortened URL Expander & Virus Scan</h2>
     
     <input type="text" id="shortUrl" placeholder="http://example.com" style="color: gray;">
@@ -44,6 +20,15 @@
     </div>
 
     <script>
+      const debugMode = false;
+      const asciiArt = `
+░█▀▀░▀▀█░█▄█░█▀▀░█▀▄░▀█▀░█▀█░░░░█▀▀░█▀█
+░█▀▀░░░█░█░█░█▀▀░█░█░░█░░█▀█░░░░█░░░█▀█
+░▀▀▀░▀▀░░▀░▀░▀▀▀░▀▀░░▀▀▀░▀░▀░▀░░▀▀▀░▀░▀
+(C) 2025 ernie@erniejohnson.ca`;
+
+  console.log(`%c${asciiArt}`, 'color: teal; font-family: monospace; font-size: 16px;');
+
     let virusTotalData= {};
 
     async function expandUrl() {
@@ -76,7 +61,7 @@
         virusTotalData = data["VirusTotal Reports"] || {};
         const vtQuota = data["VirusTotal Quota"] || {};
         const forcedHttp = data["forced_http"] || {};
-console.log("Forced http:", forcedHttp);
+        if(debugMode) console.log("Forced http:", forcedHttp);
         if (data.error) {
             document.getElementById("expandedUrl").textContent = "Error: " + data.error;
             document.getElementById("redirectsList").style.display = "none";
@@ -97,8 +82,8 @@ console.log("Forced http:", forcedHttp);
 
         const originalUrl = normalizeUrl(shortUrl);
         const expandedUrl = normalizeUrl(data["All Possible Redirections"].slice(-1)[0]);
-console.log("Expanded URL:", expandedUrl);
-console.log("Original URL:", originalUrl);
+        if(debugMode) console.log("Expanded URL:", expandedUrl);
+        if(debugMode) console.log("Original URL:", originalUrl);
         document.getElementById("expandedUrl").textContent = expandedUrl;
 
         // Handle redirects
@@ -312,7 +297,7 @@ function analyzeWithAI() {
     let url = document.getElementById("shortUrl").value;
     let redirects = document.getElementById("redirectsList").innerText.trim();
     
-    console.log("VT DATA:",virusTotalData)
+    if(debugMode) console.log("VT DATA:",virusTotalData)
     
    // Ensure virusTotalData is properly formatted
     let virusTotalChatData = "No VirusTotal data available";
@@ -334,7 +319,7 @@ function analyzeWithAI() {
 
    let apiUrl = "https://ejmedia.ca/cgi-bin/openai-interface.py";
 
-    console.log("API Request Data:", requestData);
+   if(debugMode) console.log("API Request Data:", requestData);
 
     // Indicate loading state
     let aiAnalysisOutput = document.getElementById("aiAnalysisOutput");
@@ -348,7 +333,7 @@ function analyzeWithAI() {
     })
     .then(response => response.json())  // Direct JSON parsing since we fixed the API
     .then(data => {
-        console.log("✅ AI Response:", data);
+      if(debugMode) console.log("✅ AI Response:", data);
         // Hide the "Analyze with AI" button after displaying results
         document.getElementById("analyzeAIButton").style.display = "none";
         document.getElementById("aiAnalysisOutput").innerHTML =
@@ -396,5 +381,4 @@ function addAIButton() {
 
 
     </script>
-</body>
-</html>
+<?php include "..footer.php"; ?>
