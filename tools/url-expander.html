@@ -1,4 +1,8 @@
 <?php include "../header.php"; ?>
+<script>
+    updatePageTitle("Analyze Short URL's for Malware");
+</script>
+
     <h2>Shortened URL Expander & Virus Scan</h2>
     
     <input type="text" id="shortUrl" placeholder="http://example.com" style="color: gray;">
@@ -21,13 +25,7 @@
 
     <script>
       const debugMode = false;
-      const asciiArt = `
-░█▀▀░▀▀█░█▄█░█▀▀░█▀▄░▀█▀░█▀█░░░░█▀▀░█▀█
-░█▀▀░░░█░█░█░█▀▀░█░█░░█░░█▀█░░░░█░░░█▀█
-░▀▀▀░▀▀░░▀░▀░▀▀▀░▀▀░░▀▀▀░▀░▀░▀░░▀▀▀░▀░▀
-(C) 2025 ernie@erniejohnson.ca`;
-
-  console.log(`%c${asciiArt}`, 'color: teal; font-family: monospace; font-size: 16px;');
+     
 
     let virusTotalData= {};
 
@@ -381,4 +379,4 @@ function addAIButton() {
 
 
     </script>
-<?php include "..footer.php"; ?>
+<?php include "../footer.php"; ?>
