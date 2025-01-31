@@ -108,6 +108,7 @@ button {
 /* Footer */
 footer {
   background: #222;
+  margin-top: 5px;
   color: white;
   text-align: center;
   padding: 20px 0;
