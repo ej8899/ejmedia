@@ -36,7 +36,8 @@
                 <h3>Resources</h3>
                 <ul>
                     <li><a href="#">Blog</a></li>
-                    <li><a href="#">Cybersecurity Guides</a></li>
+                    <li><a href="./awareness-guides.html">Awareness Guides</a></li>
+                    <li><a href="./awareness-presentations.html">Awareness Presentations</a></li>
                     <li><a href="#">YouTube Channel</a></li>
                     <li><a href="#">Career Transition Tips</a></li>
                 </ul>
