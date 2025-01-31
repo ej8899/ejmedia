@@ -5,7 +5,7 @@
             <!-- Company Name -->
             <div class="footer-column">
                 
-                <p>&copy; 2025 EJMEDIA.CA - All Rights Reserved.</p>
+              <p>&copy; 2025 EJMEDIA.CA<br>All Rights Reserved.</p>
             </div>
 
             <!-- Services -->
