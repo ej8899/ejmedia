@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Expander & Virus Scan</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+        input { width: 80%; padding: 10px; margin: 10px 0; }
+        button { padding: 10px 20px; cursor: pointer; }
+        .result { margin-top: 20px; text-align: left; display: inline-block; }
+        .loading { font-style: normal; color: gray; }
+        ul { text-align: left; }
+        #errorMessage {
+            color: white;
+            background-color: #d9534f; /* Bootstrap danger red */
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+    <h2>Shortened URL Expander & Virus Scan</h2>
+    
+    <input type="text" id="shortUrl" placeholder="http://example.com" style="color: gray;">
+    <p id="errorMessage" style="color: red; display: none; font-weight: bold;"></p>
+
+    <button onclick="expandUrl()">Expand & Scan</button>
+    
+    <div class="result" >
+        <h3>Expanded URL:</h3>
+        <p id="expandedUrl" class="loading"  style="display: none;">Waiting for results...</p>
+
+        <h3>All Redirects Found:</h3>
+        <ul id="redirectsList" class="loading"  style="display: none;">Waiting for results...</ul>
+
+        <h3>VirusTotal Scan Results:</h3>
+        <p id="virusTotalResult" class="loading"  style="display: none;">Waiting for scan results...</p>
+    </div>
+    <div id="outputContainer">
+    </div>
+
+    <script>
+    let virusTotalData= {};
+
+    async function expandUrl() {
+    let shortUrlInput = document.getElementById("shortUrl");
+    let shortUrl = shortUrlInput.value.trim();
+    const errorMessage = document.getElementById("errorMessage");
+
+
+   
+
+    // **STRIP http:// or https:// BEFORE sending to the API**
+    let strippedUrl = shortUrl.replace(/^https?:\/\//, ""); // This removes 'http://' or 'https://'
+
+    // Clear previous results
+    document.getElementById("outputContainer").innerHTML = '';
+    document.getElementById("expandedUrl").style.display = "block";
+    document.getElementById("redirectsList").style.display = "block";
+    document.getElementById("virusTotalResult").style.display = "block";
+
+    document.getElementById("expandedUrl").textContent = "Expanding URL...";
+    document.getElementById("redirectsList").innerHTML = "";
+    document.getElementById("virusTotalResult").textContent = "";
+
+    try {
+        // ✅ **Send the CLEANED URL WITHOUT SCHEME to the API**
+        const response = await fetch(`/cgi-bin/url_expander.py?url=${encodeURIComponent(strippedUrl)}`);
+        const data = await response.json();
+        const allRedirects = data["All Possible Redirections"] || [];
+        const vtReports = data["VirusTotal Reports"] || {};
+        virusTotalData = data["VirusTotal Reports"] || {};
+        const vtQuota = data["VirusTotal Quota"] || {};
+        const forcedHttp = data["forced_http"] || {};
+console.log("Forced http:", forcedHttp);
+        if (data.error) {
+            document.getElementById("expandedUrl").textContent = "Error: " + data.error;
+            document.getElementById("redirectsList").style.display = "none";
+            document.getElementById("virusTotalResult").style.display = "none";
+            return;
+        }
+
+        // Normalize URLs for comparison
+        function normalizeUrl(url) {
+          try {
+              let parsedUrl = new URL(url);
+              return parsedUrl.hostname + parsedUrl.pathname.replace(/\/$/, ""); // Remove protocol & trailing slash
+          } catch (e) {
+              return url.replace(/^https?:\/\//, "").replace(/\/$/, ""); // Fallback: Strip protocol manually
+          }
+      }
+
+
+        const originalUrl = normalizeUrl(shortUrl);
+        const expandedUrl = normalizeUrl(data["All Possible Redirections"].slice(-1)[0]);
+console.log("Expanded URL:", expandedUrl);
+console.log("Original URL:", originalUrl);
+        document.getElementById("expandedUrl").textContent = expandedUrl;
+
+        // Handle redirects
+        const list = document.getElementById("redirectsList");
+        list.innerHTML = "";
+        let redirects = data["All Possible Redirections"];
+        if (normalizeUrl(originalUrl) === normalizeUrl(expandedUrl)) {
+          list.innerHTML = "<p style='color: orange; font-weight: bold;'>⚠️ No redirects detected. The URL is already its final destination.</p>";
+      } else {
+            data["All Possible Redirections"].forEach(url => {
+                const li = document.createElement("li");
+                const link = document.createElement("a");
+                link.href = url;
+                link.textContent = url;
+                link.target = "_blank";
+                link.style.color = "blue";
+
+                let domain = extractDomain(url);
+                let riskLevel = "✅ Safe";
+                let riskColor = "green";
+
+                if (virusTotalData[domain]) {
+                    let vtStats = virusTotalData[domain].data?.attributes?.last_analysis_stats;
+                    let malicious = vtStats?.malicious || 0;
+                    let suspicious = vtStats?.suspicious || 0;
+
+                    if (malicious >= 4) {
+                        riskLevel = "🚨 HIGH RISK";
+                        riskColor = "red";
+                    } else if (malicious > 0 || suspicious > 0) {
+                        riskLevel = "⚠️ MEDIUM RISK";
+                        riskColor = "orange";
+                    }
+                }
+
+                const riskSpan = document.createElement("span");
+                riskSpan.textContent = ` (${riskLevel})`;
+                riskSpan.style.color = riskColor;
+                riskSpan.style.fontWeight = "bold";
+
+                li.appendChild(link);
+                li.appendChild(riskSpan);
+                list.appendChild(li);
+            });
+        }
+
+        updateVirusTotalResults(vtReports, allRedirects, vtQuota, forcedHttp);
+
+    } catch (error) {
+        console.error("Fetch error:", error);
+        document.getElementById("expandedUrl").textContent = "Error: " + error.message;
+        document.getElementById("redirectsList").textContent = "";
+        document.getElementById("virusTotalResult").textContent = "";
+    }
+}
+
+
+
+
+
+function updateVirusTotalResults(vtReports, allRedirects, vtQuota, forcedHttp) {
+    const resultElement = document.getElementById("virusTotalResult");
+
+    // console.log("Received in updateVirusTotalResults:", vtReports, allRedirects);
+
+    if (!vtReports || Object.keys(vtReports).length === 0) {
+        resultElement.innerHTML = `<strong>Error retrieving VirusTotal report:</strong> No data available`;
+        return;
+    }
+
+    let summaryHTML = ``;
+
+  
+    if (forcedHttp === "yes") {
+      
+    summaryHTML += `<p style="color: orange; font-weight: bold;">
+        ⚠️ Warning: The requested URL did not support HTTPS, so we had to use HTTP instead. This could be a security risk.
+    </p>`;
+}
+
+
+    // 🛠 Fix: Ensure allRedirects is valid before processing
+    if (!allRedirects || !Array.isArray(allRedirects) || allRedirects.length === 0) {
+        summaryHTML += `<p><strong>🔄 Redirect Analysis:</strong> No redirects detected.</p>`;
+    } else {
+        // 🏆 Generate an explanation based on the redirect chain
+        let redirectExplanation = generateRedirectExplanation(allRedirects, vtReports);
+        summaryHTML += `<p><strong>🔄 Redirect Analysis:</strong> ${redirectExplanation}</p>`;
+    }
+
+    // 🏆 Iterate through each scanned domain and display results
+    for (const [domain, report] of Object.entries(vtReports)) {
+        if (!report || report.error) {
+            summaryHTML += `<p><strong>${domain}:</strong> Error retrieving report: ${report?.error || "Unknown error"}</p>`;
+            continue;
+        }
+
+        const attributes = report.data?.attributes;
+        if (!attributes || !attributes.last_analysis_stats) {
+            summaryHTML += `<p><strong>${domain}:</strong> No scan data available</p>`;
+            continue;
+        }
+
+        const stats = attributes.last_analysis_stats;
+        const malicious = stats.malicious || 0;
+        const suspicious = stats.suspicious || 0;
+        const harmless = stats.harmless || 0;
+        const undetected = stats.undetected || 0;
+
+        // 📊 Reputation Scoring
+        let reputation = attributes.reputation || 0;
+
+        // 🎯 Adjust risk levels based on analysis
+        let riskLevel = "✅ Low Risk";
+        let riskColor = "green";
+        let riskMessage = "This domain is widely considered safe.";
+
+        if (malicious >= 4) {
+            riskLevel = "🚨 HIGH RISK - DANGEROUS!";
+            riskColor = "red";
+            riskMessage = "Multiple security vendors have flagged this site as **malicious**. Avoid clicking!";
+        } else if (malicious > 0 || suspicious > 0) {
+            riskLevel = "⚠️ MEDIUM RISK - PROCEED WITH CAUTION";
+            riskColor = "orange";
+            riskMessage = "Some security vendors have flagged this site. **Think twice before visiting.**";
+        } else if (reputation < -10) {
+            riskLevel = "⚠️ MEDIUM RISK - Low Reputation";
+            riskColor = "orange";
+            riskMessage = "This domain has a poor reputation score, possibly due to past reports or suspicious activity.";
+        } else if (reputation >= -10 && reputation < 0) {
+            riskLevel = "✅ Low Risk (Untrusted)";
+            riskColor = "green";
+            riskMessage = "This domain has a slightly negative reputation, but no malicious detections. It may just be new or unpopular.";
+        }
+
+        // Display warning + context
+        summaryHTML += `
+            <div style="margin-top:10px; padding:5px; border:1px solid ${riskColor}; background-color: ${riskColor === 'red' ? '#ffcccc' : riskColor === 'orange' ? '#ffebcc' : '#ccffcc'}">
+                <strong>🔗 Domain:</strong> ${domain}<br>
+                <strong>🔴 Malicious:</strong> <span style="color:red">${malicious}</span> |
+                <strong>🟠 Suspicious:</strong> <span style="color:orange">${suspicious}</span> |
+                <strong>🟢 Harmless:</strong> <span style="color:green">${harmless}</span> |
+                <strong>⚪ Undetected:</strong> ${undetected}<br>
+                <strong>📊 Reputation Score:</strong> <span style="color:${reputation < 0 ? 'orange' : 'green'}">${reputation}</span><br>
+                <strong>Risk Level:</strong> <span style="color:${riskColor}; font-weight: bold;">${riskLevel}</span>
+                <p><strong>⚠️ Warning:</strong> ${riskMessage}</p>
+            </div>
+        `;
+    }
+
+    if (vtQuota) {
+            // const quotaDetails = vtQuota.data.attributes;
+           // console.log("VT QUOTA DETAILS:",vtQuota)
+            let quota = vtQuota.data;
+            
+            console.log("VirusTotal API Usage:");
+            console.log(`Hourly: ${quota.api_requests_hourly.user.used} / ${quota.api_requests_hourly.user.allowed}`);
+            console.log(`Daily: ${quota.api_requests_daily.user.used} / ${quota.api_requests_daily.user.allowed}`);
+            console.log(`Monthly: ${quota.api_requests_monthly.user.used} / ${quota.api_requests_monthly.user.allowed}`);
+
+        } else {
+            console.log( `⚠️ VirusTotal Quota Information Not Available.`);
+    }
+    resultElement.innerHTML = summaryHTML;
+    addAIButton();
+}
+
+/**
+ * ✅ Generates a human-readable explanation for the redirects
+ */
+function generateRedirectExplanation(redirects, vtReports) {
+    if (!redirects || redirects.length < 2) {
+        return "This URL redirects once and is likely a standard redirect.";
+    }
+
+    let explanation = "⚠️ This URL has multiple redirects, which could indicate tracking, advertising, or obfuscation.";
+
+    const firstRedirectDomain = extractDomain(redirects[0]);
+    const finalRedirectDomain = extractDomain(redirects[redirects.length - 1]);
+
+    // ✅ Check if the first redirect is suspicious
+    if (firstRedirectDomain && vtReports[firstRedirectDomain] && !vtReports[firstRedirectDomain].error) {
+        let firstReport = vtReports[firstRedirectDomain].data?.attributes || {};
+        if (firstReport.last_analysis_stats?.malicious > 0) {
+            explanation += ` 🚨 The first redirect (${firstRedirectDomain}) has been flagged as **malicious** by VirusTotal.`;
+        }
+    }
+
+    // ✅ If final domain differs significantly from original
+    if (firstRedirectDomain !== finalRedirectDomain) {
+        explanation += ` The final destination is **${finalRedirectDomain}**, which may differ from what the original URL suggests.`;
+    }
+
+    return explanation;
+}
+
+/**
+ * ✅ Extracts the domain from a URL.
+ */
+function extractDomain(url) {
+    try {
+        return new URL(url).hostname;
+    } catch (e) {
+        return "";
+    }
+}
+
+
+
+function analyzeWithAI() {
+    let url = document.getElementById("shortUrl").value;
+    let redirects = document.getElementById("redirectsList").innerText.trim();
+    
+    console.log("VT DATA:",virusTotalData)
+    
+   // Ensure virusTotalData is properly formatted
+    let virusTotalChatData = "No VirusTotal data available";
+    
+    // Convert VirusTotal data to JSON string
+    //let virusTotalJson = JSON.stringify(virusTotalData, null, 2);
+    let virusTotalJson = document.getElementById("virusTotalResult").textContent;
+// console.log("VT DATA:",virusTotalChatData)
+
+   // Construct AI prompt message
+    let promptMessage = `You are an IT Expert with strong background in cybersecurity. I have analyzed a short URL: ${url}\n\n`;
+    promptMessage += `It has resolved with the following data:\n\n`;
+    promptMessage += `All Redirects Found:\n${redirects || "No redirects found"}\n\n`;
+    promptMessage += `A VirusTotal report shows:\n${virusTotalJson || "No VirusTotal data available"}\n\n`;
+    promptMessage += `Please tell me what you make of all this. Cover cyber safety and any other information a person should know before visiting the initial website or any of the redirected sites. Please try to limit it to a couple of paragraphs. Don't get overly complex as the information is for general website users and people not always technically minded.`;
+
+    // Prepare JSON data
+    let requestData = JSON.stringify({ prompt: promptMessage });
+
+   let apiUrl = "https://ejmedia.ca/cgi-bin/openai-interface.py";
+
+    console.log("API Request Data:", requestData);
+
+    // Indicate loading state
+    let aiAnalysisOutput = document.getElementById("aiAnalysisOutput");
+    aiAnalysisOutput.innerHTML = "<p>🔍 Analyzing with AI... Please wait.</p>";
+
+    // Send request to AI API
+    fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: promptMessage })
+    })
+    .then(response => response.json())  // Direct JSON parsing since we fixed the API
+    .then(data => {
+        console.log("✅ AI Response:", data);
+        // Hide the "Analyze with AI" button after displaying results
+        document.getElementById("analyzeAIButton").style.display = "none";
+        document.getElementById("aiAnalysisOutput").innerHTML =
+            `<h3>AI Analysis:</h3><p>${data.ai_response || "⚠️ No response from AI."}</p>`;
+    })
+    .catch(error => {
+        console.error("💥 AI Fetch Error:", error);
+        document.getElementById("aiAnalysisOutput").innerHTML =
+            `<p style="color: red;">⚠️ Error retrieving AI analysis.</p>`;
+    });
+
+
+
+
+
+}
+
+// Append 'Analyze with AI' button dynamically at the bottom of the output
+function addAIButton() {
+    let outputContainer = document.getElementById("outputContainer");
+
+    // Create button if it doesn't exist
+    if (!document.getElementById("analyzeAIButton")) {
+        let aiButton = document.createElement("button");
+        aiButton.id = "analyzeAIButton";
+        aiButton.textContent = "✨ Analyze with AI";
+        aiButton.onclick = analyzeWithAI;
+        aiButton.style.marginTop = "10px";
+        outputContainer.appendChild(aiButton);
+    }
+
+    // Create AI output section if not exists
+    if (!document.getElementById("aiAnalysisOutput")) {
+        let aiOutputDiv = document.createElement("div");
+        aiOutputDiv.id = "aiAnalysisOutput";
+        aiOutputDiv.style.marginTop = "15px";
+        outputContainer.appendChild(aiOutputDiv);
+    }
+}
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>
