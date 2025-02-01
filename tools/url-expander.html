@@ -4,11 +4,12 @@
 </script>
 
     <h2>Shortened URL Expander & Virus Scan</h2>
-    
+    <div>
     <input type="text" id="shortUrl" placeholder="http://example.com" style="color: gray;">
     <p id="errorMessage" style="color: red; display: none; font-weight: bold;"></p>
 
     <button onclick="expandUrl()">Expand & Scan</button>
+    </div>
     
     <div class="result" >
         <h3>Expanded URL:</h3>
@@ -219,7 +220,7 @@ function updateVirusTotalResults(vtReports, allRedirects, vtQuota, forcedHttp) {
 
         // Display warning + context
         summaryHTML += `
-            <div style="margin-top:10px; padding:5px; border:1px solid ${riskColor}; background-color: ${riskColor === 'red' ? '#ffcccc' : riskColor === 'orange' ? '#ffebcc' : '#ccffcc'}">
+            <div style="width:70%; margin-top:10px; padding:5px; border:1px solid ${riskColor}; background-color: ${riskColor === 'red' ? '#ffcccc' : riskColor === 'orange' ? '#ffebcc' : '#ccffcc'}">
                 <strong>🔗 Domain:</strong> ${domain}<br>
                 <strong>🔴 Malicious:</strong> <span style="color:red">${malicious}</span> |
                 <strong>🟠 Suspicious:</strong> <span style="color:orange">${suspicious}</span> |
