@@ -39,6 +39,7 @@
                     <li><a href="#">Blog</a></li>
                     <li><a href="./awareness-guides.html">Awareness Guides</a></li>
                     <li><a href="./awareness-presentations.html">Awareness Presentations</a></li>
+                    <li><a href="./cyber-news.html">Cybersecurity News</a></li>
                     <li><a href="#">YouTube Channel</a></li>
                     <li><a href="#">Career Transition Tips</a></li>
                 </ul>
