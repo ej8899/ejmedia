@@ -36,13 +36,23 @@ def save_cache(new_articles):
             json.dump({"timestamp": 0, "data": []}, f, indent=2)
 
     existing_articles = load_cache()
+    
+    # Get today's date to ensure new articles are grouped correctly
+    today = datetime.datetime.now().strftime("%Y-%m-%d")
+
+    # Separate existing articles into two groups: today's articles & older ones
+    today_articles = [a for a in existing_articles if a["retrieved_date"].startswith(today)]
+    old_articles = [a for a in existing_articles if not a["retrieved_date"].startswith(today)]
 
     # Prevent duplicates (check by URL)
-    existing_urls = {article["url"] for article in existing_articles}
-    
-    # Prepend new articles so newer ones come first
-    updated_articles = [a for a in new_articles if a["url"] not in existing_urls] + existing_articles
+    existing_urls = {article["url"] for article in today_articles}
+    new_unique_articles = [a for a in new_articles if a["url"] not in existing_urls]
 
+    # Prepend today's new articles to the existing ones for today
+    updated_today_articles = new_unique_articles + today_articles
+
+    # Combine today's updated articles with older articles
+    updated_articles = updated_today_articles + old_articles
 
     # Save merged cache with timestamp
     cache_data = {"timestamp": time.time(), "data": updated_articles}
