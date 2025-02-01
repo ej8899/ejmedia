@@ -16,7 +16,7 @@
         <div class="footer-grid">
             <!-- Company Name -->
             <div class="footer-column">
-              <img src="/graphics/logo-ejmedia.webp" alt="EJMEDIA.CA">
+                <img src="/graphics/logo-ejmedia.webp" alt="EJMEDIA.CA" class="footer-logo-image">
               <p>&copy; 2025 EJMEDIA.CA<br>All Rights Reserved.</p>
             </div>
 
@@ -83,6 +83,13 @@
 </footer>
 
 <style>
+
+.footer-logo-image {
+    width: 150px;
+    
+}
+
+
   /* Footer */
 footer {
   margin-top: 0px;
