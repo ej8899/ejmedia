@@ -37,5 +37,5 @@
         We're updating our website for a consistent experience across all pages and tools. Please bear with us.
         <button id="close-banner" onclick="closeBanner()">X</button>
     </div>
-
+    <div class="page-wrapper">
     <div class="main-container">
