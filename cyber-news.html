@@ -1,0 +1,104 @@
+<?php include "./header.php"; ?>
+
+<style>
+  body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+      background-color: #f4f4f4;
+  }
+  #search-container {
+      margin-bottom: 20px;
+  }
+  input {
+      padding: 10px;
+      width: 300px;
+      font-size: 16px;
+  }
+  button {
+      padding: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #007bff;
+      color: white;
+      border: none;
+  }
+  button:hover {
+      background-color: #0056b3;
+  }
+  #news-results {
+      margin-top: 20px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+  }
+  .article {
+      background: white;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+  .article h3 {
+      margin: 0;
+      font-size: 18px;
+  }
+  .article p {
+      margin: 5px 0;
+      color: #333;
+  }
+  .article a {
+      color: #007bff;
+      text-decoration: none;
+  }
+  .article a:hover {
+      text-decoration: underline;
+  }
+</style>
+
+<h1>Cybersecurity News Feed</h1>
+    
+
+<div id="news-results"></div>
+
+<script>
+    fetchNews();
+    function fetchNews() {
+        const keyword = "cybersecurity"
+        
+        const resultsContainer = document.getElementById("news-results");
+
+        // Clear previous results
+        resultsContainer.innerHTML = "<p>Loading...</p>";
+
+        // API Request to your CGI script
+        fetch(`https://ejmedia.ca/cgi-bin/get-news.py?keyword=${encodeURIComponent(keyword)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    resultsContainer.innerHTML = `<p style='color:red;'>Error: ${data.error}</p>`;
+                    return;
+                }
+
+                if (!data.articles || data.articles.length === 0) {
+                    resultsContainer.innerHTML = "<p>No articles found.</p>";
+                    return;
+                }
+
+                // Format news results
+                resultsContainer.innerHTML = data.articles.map(article => `
+                    <div class="article">
+                        <h3><a href="${article.url}" target="_blank">${article.headline}</a></h3>
+                        <p>${article.description}</p>
+                    </div>
+                `).join('');
+            })
+            .catch(error => {
+                resultsContainer.innerHTML = `<p style='color:red;'>Failed to fetch news.</p>`;
+                console.error("Error fetching news:", error);
+            });
+    }
+</script>
+
+<?php include "./footer.php"; ?>
