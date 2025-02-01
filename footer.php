@@ -25,6 +25,7 @@
                 <ul>
                     <li><a href="/tools/password-tester-raw.html">Password Strength Checker</a></li>
                     <li><a href="/tools/url-expander.html">URL Expander & Scan</a></li>
+                    <li><a href="/tools/qr-code-generator.html">QR Code Generator</a></li>
                     <li><a href="#">Cyber Risk Calculator</a></li>
                     <li><a href="#">Phishing Simulator</a></li>
                     <li><a href="#">Data Breach Lookup</a></li>
