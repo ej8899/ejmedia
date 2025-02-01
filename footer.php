@@ -108,12 +108,7 @@
         color: #fff;
     }
 
-    footer {
-        background: #434c5e;
-        color: #ddd;
-        padding: 20px 0;
-        text-align: left;
-    }
+
 
     .container {
         max-width: 1200px;
