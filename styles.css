@@ -6,9 +6,13 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  color: #333;
-  background-color: #f4f4f4;
+  color: #d8dee9;
+    background-color: #2e3440;
   text-align: center;
+}
+
+a {
+    color: #e5e9f0;
 }
 
 .container {
@@ -107,8 +111,8 @@ button {
 
 /* Footer */
 footer {
-  background: #222;
-  margin-top: 5px;
+    margin-top: 5px;
+  background-color: #434c5e;
   color: white;
   text-align: center;
   padding: 20px 0;

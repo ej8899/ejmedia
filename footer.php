@@ -109,7 +109,7 @@
     }
 
     footer {
-        background: #222;
+        background: #434c5e;
         color: #ddd;
         padding: 20px 0;
         text-align: left;
