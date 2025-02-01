@@ -16,7 +16,7 @@
         <div class="footer-grid">
             <!-- Company Name -->
             <div class="footer-column">
-                
+              <img src="/graphics/logo-ejmedia.webp" alt="EJMEDIA.CA">
               <p>&copy; 2025 EJMEDIA.CA<br>All Rights Reserved.</p>
             </div>
 
