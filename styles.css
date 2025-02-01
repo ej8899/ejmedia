@@ -1,10 +1,10 @@
 /* General Styles */
 body {
-  font-family: Arial, sans-serif;
-  margin: 20px;
+  font-family: Rubik;
   padding-top: 50px; /* Adjust for banner */
   color: #d8dee9;
   background-color: #2e3440;
+  margin:0;
 }
 
 a {
@@ -236,4 +236,12 @@ footer {
   background-color: #434c5e;
   color: white;
   padding: 20px 0;
+}
+
+.main-container {
+  justify-content: center;
+  align-items: center;
+  display:flex;
+  flex-direction: column;
+  width:100%;
 }
