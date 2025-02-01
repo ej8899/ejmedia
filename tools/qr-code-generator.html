@@ -1,0 +1,138 @@
+<?php include "../header.php"; ?>
+    
+    <script src="https://cdn.jsdelivr.net/npm/qr-code-styling/lib/qr-code-styling.min.js"></script>
+    <style>
+       
+        #qrcode {
+            margin-top: 20px;
+            display: inline-block;
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            padding: 10px;
+            width: 300px;  /* Set a fixed width */
+            max-width: 90%; /* Prevent overflow on smaller screens */
+            border: 2px solid #007bff; /* Add a nice border */
+            border-radius: 5px; /* Rounded corners */
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease-in-out;
+        }
+
+        input:focus {
+            border-color: #0056b3;
+            box-shadow: 0px 0px 5px rgba(0, 91, 187, 0.5);
+        }
+
+        /* Style the color picker container */
+        .color-picker-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Hide the default ugly color picker */
+        #colorPicker {
+            appearance: none;
+            border: none;
+            width: 40px;
+            height: 40px;
+            background-color: transparent;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        /* Custom round color picker */
+        #colorPicker::-webkit-color-swatch {
+            border-radius: 50%;
+            border: 2px solid #ccc;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        #colorPicker::-moz-color-swatch {
+            border-radius: 50%;
+            border: 2px solid #ccc;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Change border color when hovered */
+        #colorPicker:hover {
+            transform: scale(1.1);
+            transition: 0.2s ease-in-out;
+        }
+
+    </style>
+
+
+    <div id="intro" style="max-width: 500px; margin: 20px auto; text-align: center; font-family: Arial, sans-serif;">
+        <h2>Barebones QR Code Generator</h2>
+        <p>
+            This is a <strong>simple, privacy-friendly QR code generator</strong> – 
+            <span style="color: green; font-weight: bold;">no tracking, no redirects!</span>
+        </p>
+        <p>
+            ✅ Enter a <strong>full URL</strong> to create a QR code that links to a website.<br>
+            ✅ Enter <strong>plain text</strong> to encode any message, contact info, or other data.
+        </p>
+        <p>
+            Your QR code updates <strong>instantly</strong> as you type. No servers, no data collection – 
+            just <span style="color: #007bff; font-weight: bold;">clean, functional QR codes.</span> 🚀
+        </p>
+    </div>
+  
+
+    <input type="text" id="text" placeholder="Enter text or URL" oninput="updateQR()">
+
+    <button onclick="generateQR()">Generate QR</button>
+    <br>
+    <div id="qrcode"></div>
+    <div class="color-picker-container"
+      <label for="colorPicker">Pick QR Code Color:</label>
+      <input type="color" id="colorPicker" value="#007bff" oninput="updateQR()">
+    </div>
+
+    <script>
+        let qrCode = new QRCodeStyling({
+            width: 300,
+            height: 300,
+            type: "svg",
+            data: "",
+            image: "", // Optional: You can add a logo here
+            dotsOptions: {
+                color: "#007bff",
+                type: "rounded"
+            },
+            backgroundOptions: {
+                color: "#ffffff"
+            },
+            imageOptions: {
+                crossOrigin: "anonymous",
+                margin: 5
+            }
+        });
+
+        function updateQR() {
+            let text = document.getElementById("text").value;
+            let color = document.getElementById("colorPicker").value; // Get selected color
+
+            document.getElementById("qrcode").innerHTML = ""; // Clear previous QR code
+            qrCode.update({ 
+                data: text, 
+                dotsOptions: { color: color } // Apply new color
+            });
+            qrCode.append(document.getElementById("qrcode")); // Re-append QR code
+        }
+
+
+
+    </script>
+
+<?php include "../footer.php"; ?>
+
