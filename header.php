@@ -12,6 +12,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
     
     <script>
+    
+        function toggleMenu() {
+            document.getElementById('nav-links').classList.toggle('active');
+        }
+        
         function updatePageTitle(newTitle) {
             document.title = newTitle + " - EJMEDIA.CA";
         }
@@ -29,6 +34,43 @@
 
         console.log(`%c${asciiArt}`, 'color: teal; font-family: monospace; font-size: 16px;');
     </script>
+    
+    <style>
+     .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        .logo {
+            
+            
+        }
+        .logo-image {
+            width: 200px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .nav-links li {
+            display: inline;
+        }
+        .nav-links a {
+            text-decoration: none;
+        }
+        @media (min-width: 768px) {
+            .menu-toggle {
+                display: none;
+            }
+            .nav-links {
+                justify-content: flex-end;
+            }
+        }
+    </style>
 
 </head>
 <body>
@@ -37,5 +79,20 @@
         We're updating our website for a consistent experience across all pages and tools. Please bear with us.
         <button id="close-banner" onclick="closeBanner()">X</button>
     </div>
+    
+     <header>
+        <nav class="navbar">
+            <div class="logo"><img src="/graphics/logo-ejmedia.webp" alt="EJMEDIA.CA" class="logo-image"></div>
+            <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
+            <ul id="nav-links" class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/blog-main.html">Blog</a></li>
+                <li><a href="/tools.html">Tools</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
     <div class="page-wrapper">
     <div class="main-container">
