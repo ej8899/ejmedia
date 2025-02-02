@@ -21,19 +21,28 @@ AI_API_KEY = os.getenv("AI_API_KEY", "YOUR_AI_KEY_HERE")
 CACHE_FILE = "./news_cache.json"  # Adjust path as needed
 CACHE_EXPIRY = 12 * 60 * 60  # 12 hours in seconds
 
-def load_cache():
-    """Loads cached data, ensuring old data is always retained even if expired."""
+def load_cache(article_id=None):
+    """Loads cached news data. If `article_id` is provided, returns only that article."""
     if os.path.exists(CACHE_FILE):
         try:
             with open(CACHE_FILE, "r", encoding="utf-8") as f:
                 cache_data = json.load(f)
+                articles = cache_data.get("data", [])
+
+                # ✅ If `article_id` is provided, return only that article
+                if article_id:
+                    for article in articles:
+                        if article["article_id"] == article_id:
+                            return article  # ✅ Return the single article's data
                 
-                # 🚀 ✅ **Return ALL cached data, even if expired**
-                return cache_data.get("data", [])  
+                    return {"error": "Article not found"}  # ✅ If no match, return an error
+
+                return articles  # ✅ Return all articles if no article_id is specified
+
         except (json.JSONDecodeError, IOError):
             pass  # Ignore corruption, return empty list
 
-    return []  # If cache file doesn't exist, return an empty list
+    return []  # If file doesn't exist, return an empty list
 
 def save_cache(new_articles):
     """Saves new articles to cache while preserving retrieval dates, ensuring newest articles appear first."""
@@ -76,7 +85,6 @@ def get_query_param(param_name):
 import datetime
 
 def fetch_news(keyword, category="technology", language="en"):
-    
     # 🚨 SECURITY CHECK: Only allow 'cybersecurity' as the keyword
     if keyword.lower() != "cybersecurity":
         # print("⚠️ WARNING: Invalid keyword attempt detected. Returning cached data.")  # Log the attempt
@@ -123,7 +131,14 @@ def main():
     print()
 
     # Get the keyword from the request
-    keyword = get_query_param("keyword")
+    keyword = get_query_param("keyword").strip().lower()
+    article_id = get_query_param("article_id").strip()
+    
+    # ✅ If an `article_id` is provided, return only that specific article
+    if article_id:
+        result = load_cache(article_id=article_id)
+        print(json.dumps(result, indent=2))
+        return
 
     if not keyword:
         print(json.dumps({"error": "Missing required parameter: keyword"}))
