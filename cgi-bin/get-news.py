@@ -30,34 +30,36 @@ def load_cache():
     return []  # ❌ Cache is missing or expired
 
 def save_cache(new_articles):
-    """Saves new articles to cache while preserving retrieval dates."""
-    if not os.path.exists(CACHE_FILE):
+    """Saves new articles to cache while preserving retrieval dates, ensuring newest articles appear first."""
+    
+    if not os.path.exists(CACHE_FILE):  # Create cache if missing
         with open(CACHE_FILE, "w", encoding="utf-8") as f:
             json.dump({"timestamp": 0, "data": []}, f, indent=2)
 
     existing_articles = load_cache()
-    
-    # Get today's date to ensure new articles are grouped correctly
+
+    # Get today's date for grouping
     today = datetime.datetime.now().strftime("%Y-%m-%d")
 
-    # Separate existing articles into two groups: today's articles & older ones
+    # Separate existing articles into today's and older ones
     today_articles = [a for a in existing_articles if a["retrieved_date"].startswith(today)]
     old_articles = [a for a in existing_articles if not a["retrieved_date"].startswith(today)]
 
-    # Prevent duplicates (check by URL)
-    existing_urls = {article["url"] for article in today_articles}
-    new_unique_articles = [a for a in new_articles if a["url"] not in existing_urls]
+    # Prevent duplicates (check by article ID)
+    existing_article_ids = {article["article_id"] for article in today_articles}
+    new_unique_articles = [a for a in new_articles if a["article_id"] not in existing_article_ids]
 
-    # Prepend today's new articles to the existing ones for today
+    # Prepend today's new articles to existing ones
     updated_today_articles = new_unique_articles + today_articles
 
-    # Combine today's updated articles with older articles
+    # Combine today's updated articles with older ones
     updated_articles = updated_today_articles + old_articles
 
     # Save merged cache with timestamp
     cache_data = {"timestamp": time.time(), "data": updated_articles}
     with open(CACHE_FILE, "w", encoding="utf-8") as f:
         json.dump(cache_data, f, indent=2)
+
 
 
 def get_query_param(param_name):
@@ -82,10 +84,16 @@ def fetch_news(keyword, category="technology", language="en"):
 
         articles = [
             {
+                "article_id": article.get("article_id", ""),  # Unique identifier
                 "headline": article.get("title", "No Title"),
                 "description": article.get("description", "No Description"),
                 "url": article.get("link", "#"),
-                "retrieved_date": current_date,  # ✅ Add date
+                "keywords": article.get("keywords", []),  # List of keywords
+                "source_name": article.get("source_id", ""),  # Source name
+                "source_url": article.get("source_url", ""),  # Source URL
+                "source_icon": article.get("source_icon", ""),  # Source logo/icon
+                "image_url": article.get("image_url", ""),  # Article image
+                "retrieved_date": current_date,  # Timestamp for sorting
             }
             for article in data.get("results", [])
         ]
