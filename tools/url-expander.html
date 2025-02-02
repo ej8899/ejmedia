@@ -3,14 +3,28 @@
     updatePageTitle("Analyze Short URL's for Malware");
 </script>
 
-    <h2>Shortened URL Expander & Virus Scan</h2>
-    <div>
-    <input type="text" id="shortUrl" placeholder="http://example.com" style="color: gray;">
-    <p id="errorMessage" style="color: red; display: none; font-weight: bold;"></p>
+<STYLE>
+  .result {
+    margin: 3rem;
+    text-align: left;
+    display: inline-block;
+  }
+  .content-wrapper {
+    margin: 2rem;
+  }
+</STYLE>
 
-    <button onclick="expandUrl()">Expand & Scan</button>
-    </div>
+<div class="content-wrapper">
+    <h2>Shortened URL Expander & Virus Scan</h2>
     
+    <div>
+      <div style="display: flex; align-items: center;">
+        <input type="text" id="shortUrl" placeholder="http://example.com" style="color: gray; margin-right: 10px;">
+        <button class="btn-nord btn-nord-primary" onclick="expandUrl()" style="white-space: nowrap;">Expand & Scan</button>
+      </div>
+      <p id="errorMessage" style="color: red; display: none; font-weight: bold;"></p>
+    </div>
+    <p>Shortened URLs can hide malicious destinations and even intermediate 'hops' (redirects).  Should you avoid shortened URLs?  No, but you do need to take precautions.  This tool reveals the full URL before you click, allowing you to check for potential threats and avoid phishing scams.</p>
     <div class="result" >
         <h3>Expanded URL:</h3>
         <p id="expandedUrl" class="loading"  style="display: none;">Waiting for results...</p>
@@ -23,7 +37,7 @@
     </div>
     <div id="outputContainer">
     </div>
-
+  </div>
     <script>
       const debugMode = false;
      
@@ -358,6 +372,7 @@ function addAIButton() {
     if (!document.getElementById("analyzeAIButton")) {
         let aiButton = document.createElement("button");
         aiButton.id = "analyzeAIButton";
+        aiButton.classList.add("btn-nord", "btn-nord-primary");
         aiButton.textContent = "✨ Analyze with AI";
         aiButton.onclick = analyzeWithAI;
         aiButton.style.marginTop = "10px";
