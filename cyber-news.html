@@ -21,13 +21,13 @@
             font-weight: bold;
             margin-top: 20px;
             padding: 8px;
-            background: #007bff;
-            color: white;
+            background: var(--nord4);
+            color: var(--nord1);
             border-radius: 5px;
             text-align: center;
         }
         .article {
-            background: #d8dee9;
+            background: var(--nord4);
             padding: 15px;
             margin: 10px 0;
             border-radius: 8px;
@@ -43,14 +43,14 @@
         .article h3 {
             margin: 0;
             font-size: 18px;
-            color: #333;
+            color: var(--nord2);
         }
         .article p {
             margin: 8px 0;
-            color: #555;
+            color: #666;
         }
         .article a {
-            color: #007bff;
+          color: var(--nord2);
             font-weight: bold;
             text-decoration: none;
         }
@@ -60,6 +60,9 @@
         .article small {
             color: #777;
             font-size: 12px;
+        }
+        .fa-small {
+          font-size: 0.7em;
         }
 </style>
 
@@ -132,7 +135,7 @@
                     const articleDiv = document.createElement("div");
                     articleDiv.classList.add("article");
                     articleDiv.innerHTML = `
-                        <h3><a href="${article.url}" target="_blank">${article.headline}</a></h3>
+                        <h3><a href="${article.url}" target="_blank"><i class="fa-solid fa-newspaper"></i> ${article.headline} <i class="fa-solid fa-up-right-from-square fa-small"></i></a></h3>
                         <p>${article.description}</p>
                         <small>Retrieved on: ${article.retrieved_date}</small>
                     `;
