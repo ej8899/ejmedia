@@ -87,31 +87,7 @@ a {
   padding: 20px 0;
 }
 
-/* Header */
-header {
-  background-color: rgb(46, 52, 64);
-  color: rgb(171,185,207);
-  
-  text-align: center;
-  margin-bottom: 2rem;
-}
 
-nav ul {
-  list-style: none;
-  padding: 0;
-  text-align: center;
-}
-
-nav ul li {
-  display: inline;
-  margin: 0 15px;
-}
-
-nav ul li a {
-  color: rgb(171,185,207);
-  text-decoration: none;
-  font-weight: bold;
-}
 
 /* Hero Section */
 #hero {
@@ -286,36 +262,7 @@ pre {
   text-decoration: underline;
 }
 
-/* Update Banner */
-#update-banner {
-  background: #ffcc00;
-  color: #000;
-  text-align: center;
-  padding: 10px;
-  font-size: 16px;
-  font-weight: bold;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
 
-#close-banner {
-  background: #000;
-  color: #fff;
-  border: none;
-  padding: 5px 10px;
-  margin-left: 15px;
-  cursor: pointer;
-  font-size: 14px;
-  border-radius: 5px;
-}
-
-#close-banner:hover {
-  background: #444;
-}
 
 .page-wrapper {
   min-height: 100vh; /* Ensure it takes the full viewport height */
@@ -326,7 +273,7 @@ pre {
 }
 
 .main-container {
-    margin-top: 3rem;
+    margin-top: 5rem;
     margin-bottom:3rem;
   align-items: center;
   display:flex;
