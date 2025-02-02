@@ -20,7 +20,7 @@
                 <div style="width: 150px; display: flex; justify-content: space-between; align-items: center;">
                 <i class="fa-brands fa-github social-icon"></i>
                 <i class="fa-brands fa-youtube social-icon"></i>
-                <i class="fa-brands fa-linkedin social-icon"></i>
+                <a href="https://www.linkedin.com/in/ernie-johnson/" target="_blank"><i class="fa-brands fa-linkedin social-icon"></i></a>
                 <i class="fa-brands fa-square-x-twitter social-icon"></i>
                 <i class="fa-brands fa-medium social-icon"></i>
                 </div>
@@ -50,9 +50,9 @@
                     <li><a href="/tools/password-tester-raw.html">Password Strength</a></li>
                     <li><a href="/tools/url-expander.html">URL Expand & Scan</a></li>
                     <li><a href="/tools/qr-code-generator.html">QR Code Generator</a></li>
-                    <li><a href="#">Cyber Risk Calculator</a></li>
-                    <li><a href="#">Phishing Simulator</a></li>
-                    <li><a href="#">Data Breach Lookup</a></li>
+                    <li><a href="/tools.html">Cyber Risk Calculator</a></li>
+                    <li><a href="/tools.html">Phishing Simulator</a></li>
+                    <li><a href="/tools.html">Data Breach Lookup</a></li>
                 </ul>
             </div>
 
@@ -85,7 +85,7 @@
                 <h3>Social</h3>
                 <ul>
                     <li><a href="#">X</a></li>
-                    <li><a href="#">LinkedIn</a></li>
+                    <li><a href="https://www.linkedin.com/in/ernie-johnson/" target="_blank">LinkedIn</a></li>
                     <li><a href="#">YouTube</a></li>
                     <li><a href="#">GitHub</a></li>
                 </ul>
