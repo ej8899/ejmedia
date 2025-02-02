@@ -37,8 +37,15 @@
     </script>
     
     <style>
-     .navbar {
+    /* Header */
+        header {
+            background-color: rgb(46, 52, 64);
+            color: rgb(171,185,207);
+          
+            text-align: center;
+            margin-bottom: 2rem;
             display: flex;
+            flex-direction: row;
             justify-content: space-between;
             align-items: center;
    
@@ -46,11 +53,44 @@
             box-sizing: border-box;
             padding-left: 50px;
             padding-right: 50px;
-            position: fixed; width: 100%;
+            position: fixed; 
+            width: 100%;
             top: 0;
             background-color: rgb(36,41,51);
             z-index: 1000;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: top 0.3s ease-in-out;
+        }
+        
+        nav ul {
+          list-style: none;
+          padding: 0;
+          text-align: center;
+        }
+        
+        nav ul li {
+          display: inline;
+          margin: 0 15px;
+        }
+        
+        nav ul li a {
+          color: rgb(171,185,207);
+          text-decoration: none;
+          font-weight: bold;
+        }
+        nav {
+            width: 100%;
+        }
+        
+        #navbar nav {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+     .navbar {
+
         }
         .logo {
             
@@ -80,18 +120,50 @@
                 justify-content: flex-end;
             }
         }
+
+        /* Update Banner */
+        #update-banner {
+            position: fixed;
+            top: 55px; /* Adjust based on navbar height */
+            left: 0;
+            width: 100%;
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            text-align: center;
+            z-index: 999;
+            display: none; /* Initially hidden */
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+        }
+        
+        #update-banner.hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+
+        #close-banner {
+          background: #000;
+          color: #fff;
+          border: none;
+          padding: 5px 10px;
+          margin-left: 15px;
+          cursor: pointer;
+          font-size: 14px;
+          border-radius: 5px;
+        }
+
+        #close-banner:hover {
+          background: #444;
+        }
     </style>
 
 </head>
 <body>
 
-    <div id="update-banner">
-        We're updating our website for a consistent experience across all pages and tools. Please bear with us.
-        <button id="close-banner" onclick="closeBanner()">X</button>
-    </div>
+
     
-     <header>
-        <nav class="navbar">
+     <header id="navbar">
+        <nav>
             <div class="logo"><img src="/graphics/logo-ejmedia.webp" alt="EJMEDIA.CA" class="logo-image"></div>
             <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
             <ul id="nav-links" class="nav-links">
@@ -102,7 +174,84 @@
                 <li><i class="fas fa-envelope"></i> <a href="#">Contact</a></li>
             </ul>
         </nav>
+        
+        <div id="update-banner">
+            🚀 We're updating our website for a consistent experience across all pages and tools. Please bear with us.
+            <button id="close-banner" onclick="closeBanner()">X</button>
+        </div>
+        
     </header>
+    
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const banner = document.getElementById("update-banner");
+        const navbar = document.getElementById("navbar");
+    
+        function adjustNavbar() {
+            if (banner && banner.style.display !== "none") {
+                navbar.style.top = `${banner.offsetHeight}px`; // Shift navbar below banner
+            } else {
+                navbar.style.top = "0"; // Navbar back to top when banner is removed
+            }
+        }
+    
+        // Adjust navbar on load
+        adjustNavbar();
+    
+        // Close banner function
+        window.closeBanner = function() {
+            banner.style.display = "none";
+            adjustNavbar();
+        };
+    });
+    </script>
+    
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const banner = document.getElementById("update-banner");
+    
+        function getLastShownDate() {
+            return localStorage.getItem("updateBannerLastShown");
+        }
+    
+        function setLastShownDate() {
+            const today = new Date().toISOString().split("T")[0]; // Store only YYYY-MM-DD
+            localStorage.setItem("updateBannerLastShown", today);
+        }
+    
+        function shouldShowBanner() {
+            const lastShown = getLastShownDate();
+            const today = new Date().toISOString().split("T")[0]; 
+            return lastShown !== today; // Show only if it's a new day
+        }
+    
+        function showBanner() {
+            banner.style.display = "block"; // Make banner visible
+            setTimeout(() => {
+                banner.classList.remove("hidden"); // Animate it into place
+            }, 50); // Small delay to trigger transition
+        }
+    
+        function closeBanner() {
+            banner.classList.add("hidden"); // Apply closing animation
+            setTimeout(() => {
+                banner.style.display = "none"; // Hide after animation
+            }, 500); // Delay matches the transition time
+            setLastShownDate(); // Prevent it from showing again for 24 hours
+        }
+    
+        window.closeBanner = closeBanner; // Make function accessible to HTML button
+    
+        // Check if the banner should appear
+        if (shouldShowBanner()) {
+            showBanner();
+        }
+    });
+    </script>
+
+
+
+
     
     <div class="page-wrapper">
     <div class="main-container">
