@@ -18,7 +18,7 @@
             <div class="footer-column">
                 <img src="/graphics/logo-ejmedia.webp" alt="EJMEDIA.CA" class="footer-logo-image"><br clear=all><BR>
                 <div style="width: 150px; display: flex; justify-content: space-between; align-items: center;">
-                <i class="fa-brands fa-github social-icon"></i>
+                <a href="https://github.com/ej8899/" target="_blank"><i class="fa-brands fa-github social-icon"></i></a>
                 <i class="fa-brands fa-youtube social-icon"></i>
                 <a href="https://www.linkedin.com/in/ernie-johnson/" target="_blank"><i class="fa-brands fa-linkedin social-icon"></i></a>
                 <i class="fa-brands fa-square-x-twitter social-icon"></i>
@@ -87,7 +87,7 @@
                     <li><a href="#">X</a></li>
                     <li><a href="https://www.linkedin.com/in/ernie-johnson/" target="_blank">LinkedIn</a></li>
                     <li><a href="#">YouTube</a></li>
-                    <li><a href="#">GitHub</a></li>
+                    <li><a href="https://github.com/ej8899/" target="_blank">GitHub</a></li>
                 </ul>
             </div>
         </div>
