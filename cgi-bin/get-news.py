@@ -11,8 +11,12 @@ import datetime
 # Enable CGI error reporting
 cgitb.enable()
 
-# Get API key from environment variable
+# NEWS API configuration
 API_KEY = os.getenv("NEWSDATA_API_KEY", "YOUR_KEY_HERE")
+
+# AI API Configuration
+AI_API_URL = "https://your-ai-provider.com/generate-summary"
+AI_API_KEY = os.getenv("AI_API_KEY", "YOUR_AI_KEY_HERE")
 
 CACHE_FILE = "./news_cache.json"  # Adjust path as needed
 CACHE_EXPIRY = 12 * 60 * 60  # 12 hours in seconds
@@ -72,6 +76,12 @@ def get_query_param(param_name):
 import datetime
 
 def fetch_news(keyword, category="technology", language="en"):
+    
+    # 🚨 SECURITY CHECK: Only allow 'cybersecurity' as the keyword
+    if keyword.lower() != "cybersecurity":
+        # print("⚠️ WARNING: Invalid keyword attempt detected. Returning cached data.")  # Log the attempt
+        return load_cache()  # ✅ Return cached data instead of making an API call
+    
     """Fetches fresh news data for the given keyword."""
     url = f"https://newsdata.io/api/1/news?apikey={API_KEY}&q={keyword}&language={language}&category={category}"
 
