@@ -6,7 +6,8 @@
     <title>EJMEDIA.CA - Cybersecurity & App Development</title>
     
     <link rel="stylesheet" href="https://ejmedia.ca/styles.css">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
@@ -40,7 +41,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 20px;
+   
+            padding: 0.2rem;
+            box-sizing: border-box;
+            padding-left: 50px;
+            padding-right: 50px;
+            position: fixed; width: 100%;
+            top: 0;
+            background-color: rgb(36,41,51);
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         .logo {
             
@@ -85,11 +95,11 @@
             <div class="logo"><img src="/graphics/logo-ejmedia.webp" alt="EJMEDIA.CA" class="logo-image"></div>
             <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
             <ul id="nav-links" class="nav-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="/blog-main.html">Blog</a></li>
-                <li><a href="/tools.html">Tools</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><i class="fas fa-home"></i> <a href="/">Home</a></li>
+                <li><i class="fas fa-blog"></i> <a href="/blog-main.html">Blog</a></li>
+                <li><i class="fas fa-wrench"></i> <a href="/tools.html">Tools</a></li>
+                <li><i class="fas fa-info-circle"></i> <a href="#">About</a></li>
+                <li><i class="fas fa-envelope"></i> <a href="#">Contact</a></li>
             </ul>
         </nav>
     </header>
