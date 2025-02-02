@@ -1,9 +1,78 @@
+:root {
+  --nord0: #2e3440; /* Polar Night */
+  --nord1: #3b4252;
+  --nord2: #434a59;
+  --nord3: #4c566a;
+
+  --nord4: #d8dee9; /* Snow Storm */
+  --nord5: #e5e9f0;
+  --nord6: #eceff4;
+
+  --nord7: #8fbcbb; /* Aurora */
+  --nord8: #88c0d0;
+  --nord9: #81a1be;
+  --nord10: #5e81ac;
+
+  --nord11: #bf616a; /* Frostbite */
+  --nord12: #d08770;
+  --nord13: #ebcb8b;
+  --nord14: #a3be8c;
+  --nord15: #b48ead;
+}
+
+.text-snowstorm1 {
+  color: var(--nord4);
+}
+
+html {
+  scroll-behavior: smooth; /* Enables smooth scrolling for the entire page */
+}
+
+/* Optional: Apply smooth scrolling only to specific elements (e.g., a navigation menu) */
+.smooth-scroll-container { /* Replace with your container's class or ID */
+  scroll-behavior: smooth;
+}
+
+
+/* Optional: Style the scrollbar (cross-browser compatibility is tricky) */
+::-webkit-scrollbar {
+  width: 10px; /* Adjust scrollbar width */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color of the track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the thumb */
+  border-radius: 5px; /* Rounded corners for the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color of the thumb on hover */
+}
+
+
+/* For Firefox */
+html {
+  scrollbar-color: auto transparent; /* thumb and track color - auto for default */
+}
+/* or specify colors */
+html {
+    scrollbar-color: #a0a0a0 transparent; /* thumb and track color */
+}
+/* or for a light theme */
+html {
+    scrollbar-color: lightgray transparent; /* thumb and track color */
+}
+
+
 /* General Styles */
 body {
   font-family: Rubik;
   
   color: #d8dee9;
-  background-color: rgb(36,41,51);
+  background-color: var(--nord0);
   margin:0;
 }
 
@@ -20,9 +89,9 @@ a {
 
 /* Header */
 header {
-  background-color: rgb(36,41,51);
+  background-color: rgb(46, 52, 64);
   color: rgb(171,185,207);
-  padding: 20px 0;
+  
   text-align: center;
   margin-bottom: 2rem;
 }
@@ -91,19 +160,48 @@ nav ul li a {
   text-align: center;
 }
 
-form input, form textarea, #passwordInput, #generatedPassword {
-  width: 80%;
+form input, form textarea {
+ 
   padding: 10px;
   margin: 10px 0;
   border-radius: 5px;
+  font-size: 100%;
+  font-family: inherit;
+
+    display: block;
+    width: 100%;
+    outline: none;
+    cursor: default;
+    color: rgb(236, 239, 244);
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background-color: rgb(46, 52, 64);
+    padding: 0.5em 1em 0.5em 2em;
+    transition: border-color 100ms ease-in-out, color 400ms ease-in-out, background-color 400ms ease-in-out;
 }
 
 form input, form textarea {
   border: 1px solid #ccc;
 }
 
-#passwordInput, #generatedPassword {
-  border: 2px solid blue;
+
+
+input {
+  display: block;
+  width: 100%;
+  outline: none;
+  cursor: default;
+  color: rgb(236, 239, 244); /* Light text for contrast */
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background-color: rgb(46, 52, 64);
+  padding: 0.5em 1em 0.5em 2em;
+  transition: border-color 100ms ease-in-out, color 400ms ease-in-out, background-color 400ms ease-in-out;
+
+  /* Add this rule for the focus state */
+  &:focus {
+    border-color: #5e81ac; /* Border color on focus */
+  }
 }
 
 button {
@@ -120,11 +218,7 @@ button:hover {
   background: #444;
 }
 
-.result {
-  margin-top: 20px;
-  text-align: left;
-  display: inline-block;
-}
+
 
 .loading {
   font-style: normal;
@@ -162,14 +256,7 @@ ul {
   transition: width 0.3s;
 }
 
-#feedback, #crackTime, #warnings {
-  font-size: 0.9em;
-  margin-top: 5px;
-}
 
-#feedback, #crackTime {
-  color: #555;
-}
 
 #warnings {
   color: #e67e22;
@@ -177,11 +264,10 @@ ul {
 
 /* Debugging */
 pre {
-  background: #f8f8f8;
+  background-color: var(--nord10);
   padding: 10px;
   border-radius: 5px;
-  overflow-y: auto;
-  max-height: 300px;
+
   display: none;
 }
 
@@ -240,7 +326,8 @@ pre {
 }
 
 .main-container {
-
+    margin-top: 3rem;
+    margin-bottom:3rem;
   align-items: center;
   display:flex;
   flex-direction: column;
@@ -250,6 +337,92 @@ pre {
     
   max-width: 95%;
   border-radius: 8px;
-  background-color: rgb(46, 52, 64);
+  background-color: var(--nord1);
   box-shadow: rgba(15, 17, 21, 0.25) 0px 4px 6px, rgba(15, 17, 21, 0.1) 0px 5px 7px;
+}
+
+
+/* Basic Button Styles */
+.btn-nord {
+  display: inline-block;
+  padding: 0.75rem 1.5rem; /* Adjust padding as needed */
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px; /* Adjust border radius as needed */
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s; /* Smooth transitions */
+}
+
+/* Primary Button (Aurora Blue) */
+.btn-nord-primary {
+  background-color: var(--nord9); /* Aurora Blue */
+  color: var(--nord6); /* Snow Storm (Light text) */
+}
+
+.btn-nord-primary:hover {
+  background-color: var(--nord10); /* Darker Aurora Blue on hover */
+  color: var(--nord5);
+}
+
+/* Secondary Button (Slightly Darker Blue) */
+.btn-nord-secondary {
+  background-color: var(--nord2); /* Darker Polar Night */
+  color: var(--nord5); /* Light text */
+}
+
+.btn-nord-secondary:hover {
+  background-color: var(--nord3); /* Even Darker Polar Night on hover */
+  color: var(--nord4);
+}
+
+
+/* Danger Button (Frostbite Red) */
+.btn-nord-danger {
+  background-color: var(--nord11); /* Frostbite Red */
+  color: var(--nord6); /* Light text */
+}
+
+.btn-nord-danger:hover {
+  background-color: var(--nord12); /* Darker Frostbite Red on hover */
+  color: var(--nord5);
+}
+
+/* Success Button (Aurora Green) */
+.btn-nord-success {
+    background-color: var(--nord14); /* Aurora Green */
+    color: var(--nord0); /* Dark text */
+}
+
+.btn-nord-success:hover {
+    background-color: var(--nord13); /* Aurora Yellow on hover */
+    color: var(--nord1); /* Darker text on hover */
+}
+
+
+/* Outline Button (Aurora Blue Outline) */
+.btn-nord-outline-primary {
+    background-color: transparent;
+    border: 2px solid var(--nord9);
+    color: var(--nord9);
+}
+
+.btn-nord-outline-primary:hover {
+    background-color: var(--nord9);
+    color: var(--nord6);
+}
+
+/* Disabled Button */
+.btn-nord-disabled {
+  background-color: var(--nord3); /* Grayed out background */
+  color: var(--nord5); /* Lighter gray text */
+  cursor: default; /* Indicate not clickable */
+  opacity: 0.7; /* Slightly transparent */
+}
+
+.btn-nord-disabled:hover { /* No hover effect */
+  background-color: var(--nord3);
+  color: var(--nord5);
 }
