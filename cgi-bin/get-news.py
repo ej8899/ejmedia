@@ -18,16 +18,18 @@ CACHE_FILE = "./news_cache.json"  # Adjust path as needed
 CACHE_EXPIRY = 12 * 60 * 60  # 12 hours in seconds
 
 def load_cache():
-    """Loads cached data if it exists and is fresh."""
+    """Loads cached data, ensuring old data is always retained even if expired."""
     if os.path.exists(CACHE_FILE):
         try:
             with open(CACHE_FILE, "r", encoding="utf-8") as f:
                 cache_data = json.load(f)
-                if time.time() - cache_data.get("timestamp", 0) < CACHE_EXPIRY:
-                    return cache_data["data"]  # ✅ Return only cached articles
+                
+                # 🚀 ✅ **Return ALL cached data, even if expired**
+                return cache_data.get("data", [])  
         except (json.JSONDecodeError, IOError):
-            pass  # Ignore corrupt cache
-    return []  # ❌ Cache is missing or expired
+            pass  # Ignore corruption, return empty list
+
+    return []  # If cache file doesn't exist, return an empty list
 
 def save_cache(new_articles):
     """Saves new articles to cache while preserving retrieval dates, ensuring newest articles appear first."""
