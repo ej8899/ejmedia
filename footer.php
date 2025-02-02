@@ -16,8 +16,17 @@
         <div class="footer-grid">
             <!-- Company Name -->
             <div class="footer-column">
-                <img src="/graphics/logo-ejmedia.webp" alt="EJMEDIA.CA" class="footer-logo-image">
-              <p>&copy; 2025 EJMEDIA.CA<br>All Rights Reserved.</p>
+                <img src="/graphics/logo-ejmedia.webp" alt="EJMEDIA.CA" class="footer-logo-image"><br clear=all><BR>
+                <div style="width: 150px; display: flex; justify-content: space-between; align-items: center;">
+                <i class="fa-brands fa-github social-icon"></i>
+                <i class="fa-brands fa-youtube social-icon"></i>
+                <i class="fa-brands fa-linkedin social-icon"></i>
+                <i class="fa-brands fa-square-x-twitter social-icon"></i>
+                <i class="fa-brands fa-medium social-icon"></i>
+                </div>
+              <p>&copy; 2025 ErnieJohnson.ca<BR>
+              Made in <i class="fa-brands fa-canadian-maple-leaf"></i>
+            </p>
             </div>
 
             <!-- Services -->
@@ -28,6 +37,9 @@
                     <li><a href="#">Awareness Training</a></li>
                     <li><a href="#">Penetration Testing</a></li>
                     <li><a href="#">Web Security Audits</a></li>
+                    <li><a href="#">Remote Sys Admin</a></li>
+                    <li><a href="#">Web & App Development</a></li>
+                    <li><a href="#">Tech Tutoring</a></li>
                 </ul>
             </div>
 
@@ -35,8 +47,8 @@
             <div class="footer-column">
                 <h3>Tools</h3>
                 <ul>
-                    <li><a href="/tools/password-tester-raw.html">Password Strength Checker</a></li>
-                    <li><a href="/tools/url-expander.html">URL Expander & Scan</a></li>
+                    <li><a href="/tools/password-tester-raw.html">Password Strength</a></li>
+                    <li><a href="/tools/url-expander.html">URL Expand & Scan</a></li>
                     <li><a href="/tools/qr-code-generator.html">QR Code Generator</a></li>
                     <li><a href="#">Cyber Risk Calculator</a></li>
                     <li><a href="#">Phishing Simulator</a></li>
@@ -49,7 +61,7 @@
                 <h3>Resources</h3>
                 <ul>
                     <li><a href="/blog-main.html">Blog</a></li>
-                    <li><a href="/cyber-news.html">News</a></li>
+                    <li><a href="/cyber-news.html">Security News</a></li>
                     <li><a href="/awareness-guides.html">Awareness Guides</a></li>
                     <li><a href="/awareness-presentations.html">Awareness Presentations</a></li>
                     <li><a href="#">YouTube Channel</a></li>
@@ -89,6 +101,9 @@
     
 }
 
+.social-icon {
+  transform: scale(1.2); /* 1.2 means 120% - adjust as needed */
+}
 
   /* Footer */
 footer {
@@ -96,6 +111,7 @@ footer {
   background-color: #3B4252;
   color: rgb(171,185,207);
   padding: 20px 0;
+  display: flex;
 }
 
   .footer-divider {
@@ -114,6 +130,7 @@ footer {
         flex: 1;
         min-width: 150px;
         font-size: 0.75rem;
+        margin: 5px;
     }
 
     .footer-column h3 {
@@ -133,6 +150,7 @@ footer {
     .footer-column ul li a {
         text-decoration: none;
         color: #ddd;
+        padding-bottom: 5px;
     }
 
     .footer-column ul li a:hover {
