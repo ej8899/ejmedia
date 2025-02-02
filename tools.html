@@ -3,50 +3,122 @@
   updatePageTitle("Cybersecurity Tools");
 </script>
 
-
+</div>
 
 <h1>Cybersecurity & Web Tools</h1>
 
-<ul>
-<li style="margin-bottom: 10px;">
-  <a href="https://ejmedia.ca/tools/password-tester-raw.html"><i class="fas fa-key"></i> Password Strength Checker</a><br>
-  A strong, unique password is your first line of defense against unauthorized access to your accounts. This tool helps you create passwords that are difficult for hackers to guess.
-</li>
-<li style="margin-bottom: 10px;">
-  <a href="https://ejmedia.ca/tools/url-expander.html"><i class="fas fa-link"></i> URL Expander & Scan</a><br>
-  Shortened URLs can hide malicious destinations. This tool reveals the full URL before you click, allowing you to check for potential threats and avoid phishing scams.
-</li>
-<li style="margin-bottom: 10px;">
-  <a href="https://ejmedia.ca/tools/qr-code-generator.html"><i class="fas fa-qrcode"></i> QR Code Generator</a><br>
-  QR codes provide a convenient way to share information quickly, from website links to contact details. This tool lets you easily create your own QR codes for various purposes.
-</li>
-<li style="margin-bottom: 10px;">
-  <a href="#">
-    <i class="fas fa-calculator"></i> Cyber Risk Calculator (coming soon)
-  </a><br>
-  Estimate your organization's potential financial losses from a cyberattack.
-</li>
-<li style="margin-bottom: 10px;">
-  <a href="#">
-    <i class="fas fa-fish"></i> Phishing Simulator (coming soon)
-  </a><br>
-  Test your employees' susceptibility to phishing attacks with realistic simulations.
-</li>
-<li style="margin-bottom: 10px;">
-  <a href="#">
-    <i class="fas fa-database"></i> Data Breach Lookup (coming soon)
-  </a><br>
-  Check if your information has been compromised in known data breaches.
-</li>
-<li style="margin-bottom: 10px;">
-  <a href="#">
-    <i class="fas fa-island"></i> Cyber-Survivor Island (coming soon)
-  </a><br>
-  A fun, interactive game to learn about cybersecurity best practices.
-</li>
-</ul>
+<?php
+$tools = [
+    [
+        "icon" => "fas fa-key",
+        "title" => "Password Strength Checker",
+        "url" => "https://ejmedia.ca/tools/password-tester-raw.html",
+        "description" => "A strong, unique password is your first line of defense against unauthorized access to your accounts. This tool helps you create passwords that are difficult for hackers to guess."
+    ],
+    [
+        "icon" => "fas fa-link",
+        "title" => "URL Expander & Scan",
+        "url" => "https://ejmedia.ca/tools/url-expander.html",
+        "description" => "Shortened URLs can hide malicious destinations. This tool reveals the full URL before you click, allowing you to check for potential threats and avoid phishing scams."
+    ],
+    [
+        "icon" => "fas fa-qrcode",
+        "title" => "QR Code Generator",
+        "url" => "https://ejmedia.ca/tools/qr-code-generator.html",
+        "description" => "QR codes provide a convenient way to share information quickly, from website links to contact details. This tool lets you easily create your own QR codes for various purposes."
+    ],
+    [
+        "icon" => "fas fa-calculator",
+        "title" => "Cyber Risk Calculator (coming soon)",
+        "url" => "#",
+        "description" => "Estimate your organization's potential financial losses from a cyberattack."
+    ],
+    [
+        "icon" => "fas fa-fish",
+        "title" => "Phishing Simulator (coming soon)",
+        "url" => "#",
+        "description" => "Test your employees' susceptibility to phishing attacks with realistic simulations."
+    ],
+    [
+        "icon" => "fas fa-database",
+        "title" => "Data Breach Lookup (coming soon)",
+        "url" => "#",
+        "description" => "Check if your information has been compromised in known data breaches."
+    ],
+    [
+        "icon" => "fa-solid fa-map-location-dot",
+        "title" => "Cyber-Survivor Island (coming soon)",
+        "url" => "#",
+        "description" => "A fun, interactive game to learn about cybersecurity best practices."
+    ]
+];
+
+echo '<div class="tool-container">';
+
+foreach ($tools as $tool) {
+    echo '<article class="tool-item">';
+    echo '<i class="' . $tool["icon"] . ' tool-icon"></i>';
+    echo '<div class="tool-content">';
+    echo '<a href="' . $tool["url"] . '"><h2>' . $tool["title"];
+    
+    if (strpos($tool["title"], "(coming soon)") === false) {
+        echo ' <i class="fa-solid fa-arrow-right"></i>';
+    }
+
+    echo '</h2></a>';
+    echo '<p>' . $tool["description"] . '</p>';
+    echo '</div>';
+    echo '</article>';
+}
+
+echo '</div>';
+?>
+
+<style>
+.tool-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Ensures two columns */
+    gap: 20px;
+    max-width: 100%;
+    margin: 3rem;
+}
+
+.tool-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: var(--nord4);
+}
+
+.tool-icon {
+    font-size: 2.5em; /* Larger icons */
+    margin-right: 15px;
+    color: var(--nord9);
+}
+
+.tool-content a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #333;
+}
+
+.tool-content p {
+    margin: 5px 0 0;
+    color: #666;
+}
+
+/* Responsive: One column on smaller screens */
+@media (max-width: 768px) {
+    .tool-container {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
 
 
 
+<div>
 
 <?php include "./footer.php"; ?>
