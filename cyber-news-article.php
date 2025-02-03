@@ -115,12 +115,15 @@ function is_valid_image($url) {
   }
   .keyword-pill {
     display: inline-block;
-    background-color: #0073e6;
+    background-color:var(--nord10);
     color: white;
     padding: 5px 10px;
     margin: 5px 5px 0 0;
     border-radius: 15px;
     font-size: 0.9em;
+  }
+  .article-container h3 {
+    color: var(--nord7);
   }
 </style>
 
