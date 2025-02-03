@@ -282,7 +282,7 @@ pre {
   flex: 1;
     width: 75%;
     
-  max-width: 95%;
+  max-width: 990px;
   border-radius: 8px;
   background-color: var(--nord1);
   box-shadow: rgba(15, 17, 21, 0.25) 0px 4px 6px, rgba(15, 17, 21, 0.1) 0px 5px 7px;
