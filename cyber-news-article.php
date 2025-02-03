@@ -124,6 +124,7 @@ function is_valid_image($url) {
   }
   .article-container h3 {
     color: var(--nord7);
+    margin-bottom: 0px;
   }
 </style>
 
@@ -162,6 +163,7 @@ function is_valid_image($url) {
     <?php if (!empty($impact_smb)): ?>
       <div class="impact-section">
         <h3>Impact Analysis for Small/Medium Businesses...</h3>
+        <hr>
         <p><?php echo $impact_smb; ?></p>
       </div>
     <?php endif; ?>
@@ -169,6 +171,7 @@ function is_valid_image($url) {
     <?php if (!empty($impact_cyber)): ?>
       <div class="impact-section">
         <h3>Impact Analysis for Cybersecurity Professionals...</h3>
+        <hr>
         <p><?php echo $impact_cyber; ?></p>
       </div>
     <?php endif; ?>
