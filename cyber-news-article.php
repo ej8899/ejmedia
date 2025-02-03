@@ -129,6 +129,7 @@ function is_valid_image($url) {
 </style>
 
 <div class="article-container">
+    <div><a href="https://ejmedia.ca/cyber-news.html"><i class="fa-solid fa-arrow-left"></i> News Feed</a></div>
     <h2><?php echo $headline; ?></h2>
     <p class="article-meta">
       Source: 
