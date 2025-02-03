@@ -7,6 +7,7 @@ import requests
 import os
 import time
 import datetime
+import re
 
 
 
@@ -91,6 +92,11 @@ def load_cache(article_id=None):
         try:
             with open(CACHE_FILE, "r", encoding="utf-8") as f:
                 cache_data = json.load(f)
+                
+                
+                # log_debug("✅ Cache is still valid. Serving cached data.")
+
+                
                 articles = cache_data.get("data", [])
 
                 log_debug(f"🔍 Loaded {len(articles)} articles from cache.")  # ✅ Log total articles
@@ -160,6 +166,7 @@ def load_cache(article_id=None):
 
 def save_cache(new_articles):
     """Saves new articles to cache while preserving retrieval dates, ensuring newest articles appear first."""
+    log_debug(f"💾 Saving {len(new_articles)} new articles to cache...")
     
     if not os.path.exists(CACHE_FILE):  # Create cache if missing
         with open(CACHE_FILE, "w", encoding="utf-8") as f:
@@ -189,6 +196,7 @@ def save_cache(new_articles):
     with open(CACHE_FILE, "w", encoding="utf-8") as f:
         json.dump(cache_data, f, indent=2)
 
+    log_debug(f"✅ Successfully saved {len(updated_articles)} articles to news_cache.json!")
 
 
 def get_query_param(param_name):
@@ -199,8 +207,11 @@ def get_query_param(param_name):
 import datetime
 
 def fetch_news(keyword, category="technology", language="en"):
+    log_debug(f"📡 Attempting to fetch fresh news for keyword: {keyword}")
+    
     # 🚨 SECURITY CHECK: Only allow 'cybersecurity' as the keyword
     if keyword.lower() != "cybersecurity":
+        log_debug(f"⚠️ Invalid keyword detected: {keyword}. Returning cached data.")
         # print("⚠️ WARNING: Invalid keyword attempt detected. Returning cached data.")  # Log the attempt
         return load_cache()  # ✅ Return cached data instead of making an API call
     
@@ -209,10 +220,14 @@ def fetch_news(keyword, category="technology", language="en"):
 
     try:
         response = requests.get(url)
+        log_debug(f"🔗 News API Request URL: {url}")
         data = response.json()
 
         if data.get("status") != "success":
+            log_debug(f"❌ ERROR: Failed to fetch news: {data}")
             return {"error": "Failed to fetch news", "details": data}
+            
+        log_debug(f"✅ News API fetched {len(data.get('results', []))} articles successfully.")
 
         current_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # Store the retrieval date
 
@@ -233,12 +248,22 @@ def fetch_news(keyword, category="technology", language="en"):
         ]
 
         save_cache(articles)  # ✅ Merge with existing cache instead of overwriting
+        log_debug(f"✅ News API fetched {len(articles)} articles. Ensuring cache is updated...")
+
         return articles
 
     except requests.exceptions.RequestException as e:
-        return {"error": "Request to news API failed", "details": str(e)}
+        log_debug(f"❌ ERROR: Request to news API failed: {e}")
+        # return {"error": "Request to news API failed", "details": str(e)}
+        return load_cache()
 
+def clean_keywords(keywords):
+    """Removes keywords containing special characters and ensures a valid list."""
+    if not isinstance(keywords, list):  # ✅ Ensure it's always a list
+        return []
+    return [kw for kw in keywords if isinstance(kw, str) and re.match(r'^[a-zA-Z0-9\s-]+$', kw)]
 
+    
 def main():
     """Handles CGI request and returns cached or fresh news."""
     print("Content-Type: application/json")
@@ -250,24 +275,53 @@ def main():
     
     # ✅ If an `article_id` is provided, return only that specific article
     if article_id:
+        log_debug(f"📰 Fetching single article ID: {article_id}")
         result = load_cache(article_id=article_id)
         print(json.dumps(result, indent=2))
         return
 
     if not keyword:
+        log_debug(f"⚠️ Missing required parameter: keyword")
         print(json.dumps({"error": "Missing required parameter: keyword"}))
         return
 
     # Load cache
-    cache = load_cache()
+    #cache = load_cache()
 
-    if cache:
-        print(json.dumps({"status": "Using cached data", "articles": cache}, indent=2))
-        return
+    # if cache:
+    #     print(json.dumps({"status": "Using cached data", "articles": cache}, indent=2))
+    #     return
 
-    # If cache is expired, fetch fresh data
-    fresh_data = fetch_news(keyword)
-    print(json.dumps({"status": "Fetched fresh data", "articles": fresh_data}, indent=2))
+    # 🚀 Check if cache is expired before deciding what to return
+    with open(CACHE_FILE, "r", encoding="utf-8") as f:
+        cache_data = json.load(f)
+    
+    last_update_time = cache_data.get("timestamp", 0)
+    current_time = time.time()
+    
+    if current_time - last_update_time > CACHE_EXPIRY:
+        log_debug("🛑 Cache is expired! Fetching fresh news.")
+        fresh_data = fetch_news("cybersecurity")  # ✅ Fetch only once when cache expires
+        # ✅ Clean keywords before returning fresh data
+        for article in fresh_data:
+            article["keywords"] = clean_keywords(article.get("keywords", []))
+        
+        print(json.dumps({"status": "Fetched fresh data", "articles": fresh_data}, indent=2))
+    else:
+        log_debug("✅ Cache is still valid. Serving cached data.")
+         # ✅ Clean keywords before returning cached data
+        cached_articles = cache_data.get("data", [])
+        for article in cached_articles:
+            article["keywords"] = clean_keywords(article.get("keywords", []))
+        
+        print(json.dumps({"status": "Using cached data", "articles": cached_articles}, indent=2))
+
+
+
+    # # If cache is expired, fetch fresh data
+    # log_debug(f"🔎 Fetching news for keyword: {keyword}")
+    # fresh_data = fetch_news(keyword)
+    # print(json.dumps({"status": "Fetched fresh data", "articles": fresh_data}, indent=2))
 
 if __name__ == "__main__":
     main()
