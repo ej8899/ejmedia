@@ -46,7 +46,7 @@
             margin-bottom: 2rem;
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
    
             padding: 0.2rem;
@@ -86,6 +86,7 @@
             display: flex;
             align-items: center;
             width: 100%;
+            max-width: 990px;
             justify-content: space-between;
         }
 
