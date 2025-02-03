@@ -46,7 +46,7 @@ def generate_impact_analysis(headline, description):
     def fetch_ai_response(prompt):
         """Helper function to make an OpenAI request for a single prompt."""
         payload = {
-            "model": "gpt-3.5-turbo"
+            "model": "gpt-3.5-turbo",
             "messages": [
                 {"role": "system", "content": "You are an AI assistant analyzing news articles."},
                 {"role": "user", "content": prompt}
