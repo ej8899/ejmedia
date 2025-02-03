@@ -38,6 +38,7 @@
                     <li><a href="#">Penetration Testing</a></li>
                     <li><a href="#">Web Security Audits</a></li>
                     <li><a href="#">Remote Sys Admin</a></li>
+                    <li><a href="#">M365 Admin</a></li>
                     <li><a href="#">Web & App Development</a></li>
                     <li><a href="#">Tech Tutoring</a></li>
                 </ul>
@@ -80,16 +81,7 @@
                 </ul>
             </div>
 
-            <!-- Social -->
-            <div class="footer-column">
-                <h3>Social</h3>
-                <ul>
-                    <li><a href="#">X</a></li>
-                    <li><a href="https://www.linkedin.com/in/ernie-johnson/" target="_blank">LinkedIn</a></li>
-                    <li><a href="#">YouTube</a></li>
-                    <li><a href="https://github.com/ej8899/" target="_blank">GitHub</a></li>
-                </ul>
-            </div>
+   
         </div>
     </div>
 </footer>
