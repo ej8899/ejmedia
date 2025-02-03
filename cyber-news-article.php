@@ -187,7 +187,7 @@ function is_valid_image($url) {
         <div class="ai-disclaimer">
           <strong>Note:</strong> This summary is AI-generated. While we strive for accuracy, please verify critical details independently.
         </div>
-        <h3>Cybersecurity Implications</h3>
+        <h3> Impacts for Cybersecurity Specialists</h3>
         <hr>
         <p><?php echo $impact_cyber; ?></p>
       </div>
