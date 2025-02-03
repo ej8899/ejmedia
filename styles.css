@@ -373,3 +373,7 @@ pre {
   background-color: var(--nord3);
   color: var(--nord5);
 }
+
+.fa-small {
+    font-size: 0.75rem;
+}
