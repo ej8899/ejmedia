@@ -126,6 +126,16 @@ function is_valid_image($url) {
     color: var(--nord7);
     margin-bottom: 0px;
   }
+  .ai-disclaimer {
+    background-color: var(--nord1);
+    color: var(--nord4);
+    font-size: 0.85em;
+    padding: 8px;
+    border-left: 4px solid var(--nord10);
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
 </style>
 
 <div class="article-container">
@@ -163,7 +173,10 @@ function is_valid_image($url) {
 
     <?php if (!empty($impact_smb)): ?>
       <div class="impact-section">
-        <h3>Impact Analysis for Small/Medium Businesses...</h3>
+        <div class="ai-disclaimer">
+          <strong>Note:</strong> This summary is AI-generated. While we strive for accuracy, please verify critical details independently.
+        </div>
+        <h3>Impact on Small/Medium Businesses</h3>
         <hr>
         <p><?php echo $impact_smb; ?></p>
       </div>
@@ -171,7 +184,10 @@ function is_valid_image($url) {
 
     <?php if (!empty($impact_cyber)): ?>
       <div class="impact-section">
-        <h3>Impact Analysis for Cybersecurity Professionals...</h3>
+        <div class="ai-disclaimer">
+          <strong>Note:</strong> This summary is AI-generated. While we strive for accuracy, please verify critical details independently.
+        </div>
+        <h3>Cybersecurity Implications</h3>
         <hr>
         <p><?php echo $impact_cyber; ?></p>
       </div>
