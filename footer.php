@@ -1,6 +1,10 @@
 
 </div> <!-- closes main-container -->
 </div> <!-- closes page wrapper -->
+
+
+
+<footer class="bg-gray-50 dark:bg-gray-800 mt-10">
 <div class="footer-divider">
   <div class="custom-shape-divider-bottom-1738417448">
         <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
@@ -10,81 +14,114 @@
         </svg>
       </div>
 </div>
-<footer>
-    <div class="footer-container">
-  
-        <div class="footer-grid">
-            <!-- Company Name -->
-            <div class="footer-column">
-                <img src="/graphics/logo-ejmedia.webp" alt="EJMEDIA.CA" class="footer-logo-image"><br clear=all><BR>
-                <div style="width: 150px; display: flex; justify-content: space-between; align-items: center;">
-                <a href="https://github.com/ej8899/" target="_blank"><i class="fa-brands fa-github social-icon"></i></a>
-                <i class="fa-brands fa-youtube social-icon"></i>
-                <a href="https://www.linkedin.com/in/ernie-johnson/" target="_blank"><i class="fa-brands fa-linkedin social-icon"></i></a>
-                <i class="fa-brands fa-square-x-twitter social-icon"></i>
-                <i class="fa-brands fa-medium social-icon"></i>
-                </div>
-              <p>&copy; 2025 ErnieJohnson.ca<BR>
-              Made in <i class="fa-brands fa-canadian-maple-leaf"></i>
-            </p>
-            </div>
-
-            <!-- Services -->
-            <div class="footer-column">
-                <h3>Services</h3>
-                <ul>
-                    <li><a href="#">Cybersecurity Consulting</a></li>
-                    <li><a href="#">Awareness Training</a></li>
-                    <li><a href="#">Penetration Testing</a></li>
-                    <li><a href="#">Web Security Audits</a></li>
-                    <li><a href="#">Remote Sys Admin</a></li>
-                    <li><a href="#">M365 Admin</a></li>
-                    <li><a href="#">Web & App Development</a></li>
-                    <li><a href="#">Tech Tutoring</a></li>
-                </ul>
-            </div>
-
-            <!-- Tools -->
-            <div class="footer-column">
-                <h3>Tools</h3>
-                <ul>
-                    <li><a href="/tools/password-tester-raw.html">Password Strength</a></li>
-                    <li><a href="/tools/url-expander.html">URL Expand & Scan</a></li>
-                    <li><a href="/tools/qr-code-generator.html">QR Code Generator</a></li>
-                    <li><a href="/tools.html">Cyber Risk Calculator</a></li>
-                    <li><a href="/tools.html">Phishing Simulator</a></li>
-                    <li><a href="/tools.html">Data Breach Lookup</a></li>
-                </ul>
-            </div>
-
-            <!-- Resources -->
-            <div class="footer-column">
-                <h3>Resources</h3>
-                <ul>
-                    <li><a href="/blog-main.html">Blog</a></li>
-                    <li><a href="/cyber-news.html">Security News</a></li>
-                    <li><a href="/awareness-guides.html">Awareness Guides</a></li>
-                    <li><a href="/awareness-presentations.html">Awareness Presentations</a></li>
-                    <li><a href="#">YouTube Channel</a></li>
-                    <li><a href="#">Career Transition Tips</a></li>
-                </ul>
-            </div>
-
-            <!-- Company -->
-            <div class="footer-column">
-                <h3>Company</h3>
-                <ul>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                </ul>
-            </div>
-
-   
-        </div>
-    </div>
+  <div class="p-4 py-6 mx-auto max-w-screen-xl md:p-8 lg:-10">
+      <div class="grid grid-cols-2 gap-8 lg:grid-cols-6">
+          <div class="col-span-2">
+              <a href="/" class="flex items-center mb-2 text-2xl font-semibold text-gray-900 sm:mb-0 dark:text-white">
+                <img src="/graphics/logo-ejmedia.webp" alt="EJMEDIA.CA" class="footer-logo-image"> 
+              </a>
+              <p class="my-4 font-light text-gray-500 dark:text-gray-400">EJ Media is a full service cybersecurity and web development company based in Canada.</p>
+              <ul class="flex mt-5 space-x-6">
+                <li><a href="https://www.linkedin.com/in/ernie-johnson/" target="_blank"><i class="fa-brands fa-linkedin social-icon"></i></a></li>
+                <li><a href="https://github.com/ej8899/" target="_blank"><i class="fa-brands fa-github social-icon"></i></a></li>
+                <li><i class="fa-brands fa-youtube social-icon"></i></li>
+                <li><i class="fa-brands fa-square-x-twitter social-icon"></i></li>
+                <li><i class="fa-brands fa-medium social-icon"></i></li>
+              </ul>
+          </div>
+          <div class="lg:mx-auto">
+              <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Services</h2>
+              <ul class="text-gray-500 dark:text-gray-400">
+                  <li class="mb-4">
+                      <a href="#" class=" hover:underline">Cybersecurity Consulting</a>
+                  </li>
+                  <li class="mb-4">
+                      <a href="#" class="hover:underline">Awareness Training</a>
+                  </li>
+                  <li class="mb-4">
+                      <a href="#" class="hover:underline">Security Audits</a>
+                  </li>
+                  <li class="mb-4">
+                      <a href="#" class="hover:underline">M365 Admin</a>
+                  </li>
+                  <li class="mb-4">
+                      <a href="#" class="hover:underline">Web & App Development</a>
+                  </li>
+                  <li class="mb-4">
+                      <a href="#" class="hover:underline">Tech Tutoring</a>
+                  </li>                  
+              </ul>
+          </div>
+          <div class="lg:mx-auto">
+              <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Tools</h2>
+              <ul class="text-gray-500 dark:text-gray-400">
+                  <li class="mb-4">
+                      <a href="https://ejmedia.ca/tools/password-tester-raw.html" class="hover:underline">Password Tester</a>
+                  </li>
+                  <li class="mb-4">
+                      <a href="https://ejmedia.ca/tools/url-expander.html" class="hover:underline">URL Expand & Scan</a>
+                  </li>
+                  <li class="mb-4">
+                      <a href="https://ejmedia.ca/tools/qr-code-generator.html" class="hover:underline">QR Code Generator</a>
+                  </li>
+                  <li class="mb-4">
+                      <a href="https://ejmedia.ca/tools.html" class="hover:underline">Cyber Risk Calculator</a>
+                  </li>
+                  <li class="mb-4">
+                      <a href="https://ejmedia.ca/tools.html" class="hover:underline">Phishing Simulator</a>
+                  </li>
+                  <li class="mb-4">
+                      <a href="https://ejmedia.ca/tools.html" class="hover:underline">Data Breach Lookup</a>
+                  </li>
+              </ul>
+          </div>
+          <div class="lg:mx-auto">
+              <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Resources</h2>
+              <ul class="text-gray-500 dark:text-gray-400">
+                  <li class="mb-4">
+                      <a href="#" class="hover:underline">Blog</a>
+                  </li>
+                  <li class="mb-4">
+                      <a href="/cyber-news.html" class="hover:underline">Security News</a>
+                  </li>
+                  <li class="mb-4">
+                      <a href="/awareness-guides.html" class="hover:underline">Awareness Guides</a>
+                  </li>
+                  <li class="mb-4">
+                      <a href="/awareness-presentations.html" class="hover:underline">Awareness Presentations</a>
+                  </li>
+                  <li class="mb-4">
+                      <a href="#" class="hover:underline">YouTube Channel</a>
+                  </li>
+                  <li class="mb-4">
+                      <a href="#" class="hover:underline">Career Transition Tips</a>
+                  </li>
+              </ul>
+          </div>
+          <div class="lg:mx-auto">
+              <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Company</h2>
+              <ul class="text-gray-500 dark:text-gray-400">
+                  <li class="mb-4">
+                      <a href="#" class="hover:underline">About Us</a>
+                  </li>
+                  <li class="mb-4">
+                      <a href="#" class="hover:underline">Contact Us</a>
+                  </li>
+                  <li class="mb-4">
+                      <a href="#" class="hover:underline">Privacy Policy</a>
+                  </li>
+                  <li class="mb-4">
+                      <a href="#" class="hover:underline">Terms of Service</a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+      <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8">
+      <span class="block text-sm text-center text-gray-500 dark:text-gray-400">© 2022-2025 <a href="#" class="hover:underline">EJMedia.ca</a>. Made in <i class="fa-brands fa-canadian-maple-leaf"></i>. All Rights Reserved.</span>
+  </div>
 </footer>
+
+
 
 <style>
 
@@ -97,66 +134,12 @@
   transform: scale(1.2); /* 1.2 means 120% - adjust as needed */
 }
 
-  /* Footer */
-footer {
-  margin-top: 0px;
-  background-color: #3B4252;
-  color: rgb(171,185,207);
-  padding: 20px 0;
-  display: flex;
-}
-
   .footer-divider {
     position: relative;
     margin-top:3rem;
   }
-    .footer-grid {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 20px;
-        padding: 20px 0;
-    }
-
-    .footer-column {
-        flex: 1;
-        min-width: 150px;
-        font-size: 0.75rem;
-        margin: 5px;
-    }
-
-    .footer-column h3 {
-        font-size: 1rem;
-        margin-bottom: 10px;
-    }
-
-    .footer-column ul {
-        list-style: none;
-        padding: 0;
-    }
-
-    .footer-column ul li {
-        margin-bottom: 5px;
-    }
-
-    .footer-column ul li a {
-        text-decoration: none;
-        color: #ddd;
-        padding-bottom: 5px;
-    }
-
-    .footer-column ul li a:hover {
-        color: #fff;
-    }
 
 
-
-    .footer-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
-        position: relative;
-    }
 
     .custom-shape-divider-bottom-1738417448 {
         position: absolute;
@@ -179,6 +162,8 @@ footer {
         fill: #3B4252;
     }
 </style>
-    
+
+
+
 </body>
 </html>
