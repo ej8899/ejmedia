@@ -139,8 +139,8 @@ function is_valid_image($url) {
 </style>
 
 <div class="article-container">
-    <div><a href="https://ejmedia.ca/cyber-news.html"><i class="fa-solid fa-arrow-left"></i> News Feed</a></div>
-    <h2><?php echo $headline; ?></h2>
+    <div><a href="https://ejmedia.ca/cyber-news.html"><i class="fa-solid fa-arrow-left"></i> Back to News Feed</a></div>
+    <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white"><?php echo $headline; ?></h1>
     <p class="article-meta">
       Source: 
       <?php if ($source_url): ?>
@@ -155,7 +155,7 @@ function is_valid_image($url) {
       <div class="keyword-container">
         <strong>Keywords:</strong>
         <?php foreach ($clean_keywords as $keyword): ?>
-          <span class="keyword-pill"><?php echo htmlspecialchars($keyword); ?></span>
+          <span class="bg-primary-100 text-primary-800 text-sm font-medium mr-3 px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800 mb-3"><?php echo htmlspecialchars($keyword); ?></span>
         <?php endforeach; ?>
       </div>
     <?php endif; ?>

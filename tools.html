@@ -3,7 +3,11 @@
   updatePageTitle("Cybersecurity Tools");
 </script>
 
-<h1>Cybersecurity & Web Tools</h1>
+
+
+<section class="bg-white dark:bg-gray-800 flex justify-center">
+<div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
+<h2 class="text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">Cybersecurity & Web Tools</h2>
 
 
 
@@ -56,24 +60,40 @@ $tools = [
 
 echo '<div class="tool-container">';
 
+
 foreach ($tools as $tool) {
-    echo '<article class="tool-item">';
-    echo '<i class="' . $tool["icon"] . ' tool-icon"></i>';
-    echo '<div class="tool-content">';
-    echo '<a href="' . $tool["url"] . '"><h2>' . $tool["title"];
+    echo '<div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-700 dark:border-gray-700">';  
+    
+    // Icon rendering (if using a custom icon, replace with appropriate SVG or class)
+    if (!empty($tool["icon"])) {
+        echo '<i class="' . $tool["icon"] . ' tool-icon w-7 h-7 text-gray-500 dark:text-gray-400 mb-3" aria-hidden="true"></i>';
+    }
+    
+    echo '<a href="' . htmlspecialchars($tool["url"]) . '">';
+    echo '<h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">' . htmlspecialchars($tool["title"]) . '</h5>';
+    echo '</a>';
+    
+    echo '<p class="mb-3 font-normal text-gray-500 dark:text-gray-400">' . htmlspecialchars($tool["description"]) . '</p>';
     
     if (strpos($tool["title"], "(coming soon)") === false) {
-        echo ' <i class="fa-solid fa-arrow-right"></i>';
+       echo '<a href="' . htmlspecialchars($tool["url"]) . '" class="inline-flex font-medium items-center text-blue-600 hover:underline">';
+        echo 'Try it out here';
+        echo '<svg class="w-3 h-3 ms-2.5 rtl:rotate-[270deg]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">';
+        echo '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"/>';
+        echo '</svg>';
+        echo '</a>';
     }
-
-    echo '</h2></a>';
-    echo '<p>' . $tool["description"] . '</p>';
+ 
+    
     echo '</div>';
-    echo '</article>';
 }
+
+
 
 echo '</div>';
 ?>
+
+</div></section>
 
 <style>
 .tool-container {
