@@ -9,7 +9,7 @@
                 </svg>
                 <span class="sr-only">Light bulb</span>
             </span>
-            <span>New site design is in progress for <a href="https://ejmedia.ca class="inline font-medium text-blue-600 underline dark:text-blue-500 hover:no-underline">EJMedia</a>, please bear with us!</span>
+            <span>New site design is in progress for <a href="https://ejmedia.ca class="inline font-medium text-blue-600 underline dark:text-blue-500 hover:no-underline">EJMedia</a>, please bear with us 🚀</span>
         </p>
     </div>
     <div class="flex items-center">
