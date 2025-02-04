@@ -106,13 +106,32 @@
   .article-text {
       flex: 1;
   }
+  
+    .read-article {
+        background: #d3ffd3 !important; /* Light green to indicate read */
+    }
+    
+    .read-label {
+        display: inline-block;
+        background: green;
+        color: white;
+        font-size: 12px;
+        padding: 4px 8px;
+        border-radius: 5px;
+        margin-bottom: 5px;
+    }
 
 
 </style>
 
-<h1>Cybersecurity News Feed</h1>
+<section class="bg-white dark:bg-gray-800 flex justify-center">
+<div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
+<h2 class="text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">Cybersecurity News Feed</h2>
 
 <div id="news-results"></div>
+
+</div>
+</section>
 
 <script>
     fetchNews();
@@ -220,7 +239,7 @@
                 // Clean up keywords
                 let cleanedKeywords = cleanKeywords(article.keywords);
                 let keywordsHTML = cleanedKeywords.length > 0
-                    ? `<div class="keywords">${cleanedKeywords.map(kw => `<span class="keyword-pill">${kw}</span>`).join('')}</div>`
+                    ? `<div class="keywords">${cleanedKeywords.map(kw => `<span class="bg-primary-100 text-primary-800 text-sm font-medium mr-3 px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800 mb-3">${kw}</span>`).join('')}</div>`
                     : "";
     
                 // Use article image if available
@@ -232,7 +251,7 @@
                         ${articleImage}
                         <div class="article-text">
                             ${keywordsHTML}
-                            <h3>${truncateTitle(article.headline)}</h3>
+                            <h3 class="mb-4 text-1xl leading-tight text-gray-700 lg:mb-6 lg:text-1xl dark:text-gray-700">${truncateTitle(article.headline)}</h3>
                             <p>${article.description && article.description !== "null" ? article.description : ""}<br>
                             <i class="fa-solid fa-angles-right fa-small"></i> <a href="https://ejmedia.ca/cyber-news-article.php?article_id=${article.article_id}">Read more...</a></p>
                             <small>${formatDate(article.retrieved_date)}</small>
@@ -245,6 +264,53 @@
     }
 
 
+    // Retrieve the list of read articles from localStorage
+    function getReadArticles() {
+        return JSON.parse(localStorage.getItem("readArticles") || "[]");
+    }
+    
+    // Save an article as read
+    function markArticleAsRead(articleId) {
+        let readArticles = getReadArticles();
+        if (!readArticles.includes(articleId)) {
+            readArticles.push(articleId);
+            localStorage.setItem("readArticles", JSON.stringify(readArticles));
+        }
+    }
+    
+    // Function to update UI for read articles
+    function updateReadArticlesUI() {
+        let readArticles = getReadArticles();
+        document.querySelectorAll(".article").forEach(article => {
+            let link = article.querySelector("a");
+            if (link) {
+                let urlParams = new URLSearchParams(new URL(link.href).search);
+                let articleId = urlParams.get("article_id");
+                if (readArticles.includes(articleId)) {
+                    article.classList.add("read-article"); // Apply CSS class
+                    let label = document.createElement("span");
+                    label.innerText = "Read";
+                    label.className = "read-label";
+                    article.querySelector(".article-text").prepend(label); // Add label
+                }
+            }
+        });
+    }
+    
+    // Event listener for marking articles as read
+    document.addEventListener("click", function(event) {
+        let link = event.target.closest("a");
+        if (link && link.href.includes("article_id=")) {
+            let urlParams = new URLSearchParams(new URL(link.href).search);
+            let articleId = urlParams.get("article_id");
+            if (articleId) {
+                markArticleAsRead(articleId);
+            }
+        }
+    });
+    
+    // Run UI update after rendering articles
+    setTimeout(updateReadArticlesUI, 1000);
 
 </script>
 
