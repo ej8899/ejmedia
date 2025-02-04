@@ -32,8 +32,7 @@
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-      display: flex;
-      flex-direction: column;
+
   }
   .article:hover {
       transform: translateY(-3px);
@@ -108,7 +107,7 @@
   }
   
     .read-article {
-        background: #d3ffd3 !important; /* Light green to indicate read */
+        
     }
     
     .read-label {
@@ -124,8 +123,8 @@
 
 </style>
 
-<section class="bg-white dark:bg-gray-800 flex justify-center">
-<div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
+<section class="bg-white dark:bg-gray-800 flex justify-center w-full">
+<div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md w-full">
 <h2 class="text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">Cybersecurity News Feed</h2>
 
 <div id="news-results"></div>
@@ -234,29 +233,29 @@
     
             groupedByDate[date].forEach(article => {
                 const articleDiv = document.createElement("div");
-                articleDiv.classList.add("article");
+                articleDiv.classList.add("w-full");
     
                 // Clean up keywords
                 let cleanedKeywords = cleanKeywords(article.keywords);
                 let keywordsHTML = cleanedKeywords.length > 0
-                    ? `<div class="keywords">${cleanedKeywords.map(kw => `<span class="bg-primary-100 text-primary-800 text-sm font-medium mr-3 px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800 mb-3">${kw}</span>`).join('')}</div>`
+                    ? `<div class="keywords">${cleanedKeywords.map(kw => `<span class=" bg-primary-100 text-primary-800 text-sm font-medium mr-3 px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800 mb-3">${kw}</span>`).join('')}</div>`
                     : "";
     
                 // Use article image if available
                 const articleImage = article.image_url ? `<img src="${article.image_url}" alt="Article Image" class="article-image">` : "";
     
                 articleDiv.innerHTML = `
-                    <!-- Article ID: ${article.article_id} -->
-                    <div class="article-content">
-                        ${articleImage}
-                        <div class="article-text">
-                            ${keywordsHTML}
-                            <h3 class="mb-4 text-1xl leading-tight text-gray-700 lg:mb-6 lg:text-1xl dark:text-gray-700">${truncateTitle(article.headline)}</h3>
-                            <p>${article.description && article.description !== "null" ? article.description : ""}<br>
-                            <i class="fa-solid fa-angles-right fa-small"></i> <a href="https://ejmedia.ca/cyber-news-article.php?article_id=${article.article_id}">Read more...</a></p>
-                            <small>${formatDate(article.retrieved_date)}</small>
-                        </div>
-                    </div>
+                        
+        <a href="https://ejmedia.ca/cyber-news-article.php?article_id=${article.article_id}"   class="article grid grid-cols-1 md:grid-cols-[160px_1fr] bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-600 dark:hover:bg-gray-500 w-full mb-4">
+    <div class="relative md:h-full"> <img class="object-cover w-full h-full rounded-t-lg md:rounded-none md:rounded-s-lg" src="${article.image_url}" alt=""> </div>
+    <div class="flex flex-col justify-between p-0 ml-4 leading-normal w-full article-text">
+        ${keywordsHTML}
+        <h5 id="${article.article_id}" class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">${truncateTitle(article.headline)}</h5>
+        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">${article.description && article.description !== "null" ? article.description : ""}</p>
+    </div>
+</a>
+
+              
                 `;
                 resultsContainer.appendChild(articleDiv);
             });
@@ -279,20 +278,38 @@
     }
     
     // Function to update UI for read articles
-    function updateReadArticlesUI() {
+       function updateReadArticlesUI() {
+        console.log("in updateReadArticlesUI");
         let readArticles = getReadArticles();
-        document.querySelectorAll(".article").forEach(article => {
-            let link = article.querySelector("a");
-            if (link) {
-                let urlParams = new URLSearchParams(new URL(link.href).search);
-                let articleId = urlParams.get("article_id");
-                if (readArticles.includes(articleId)) {
-                    article.classList.add("read-article"); // Apply CSS class
-                    let label = document.createElement("span");
-                    label.innerText = "Read";
-                    label.className = "read-label";
-                    article.querySelector(".article-text").prepend(label); // Add label
+        console.log("readArticles", readArticles);
+    
+        readArticles.forEach(articleId => {  // Loop through readArticles directly for efficiency
+            let titleElement = document.getElementById(articleId); // Use getElementById
+    
+            if (titleElement) { // Check if the element was found
+                let article = titleElement.closest(".article"); // Find the parent article element
+    
+                if (article) { // Ensure the article is found
+                    console.log("Read article: ", articleId);
+                    article.classList.add("read-article");
+    
+                     // Create the label only if it doesn't already exist - prevent duplicates
+                    if (!article.querySelector(".read-label")) {
+                        let label = document.createElement("span");
+                        label.innerText = "Read";
+                        label.className = "read-label";
+    
+                        // Find a suitable place to put the label.  If you want it beside the title:
+                        titleElement.parentNode.insertBefore(label, titleElement.nextSibling);
+    
+                        // OR, if you want it in the top corner of the card:
+                        // article.prepend(label);
+                    }
+                } else {
+                    console.error("Article not found for ID:", articleId);
                 }
+            } else {
+                console.log("Title element not found for ID:", articleId); // Log, but don't necessarily error
             }
         });
     }
