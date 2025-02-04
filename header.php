@@ -16,7 +16,16 @@
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.1/dist/flowbite.min.css" rel="stylesheet" />
     
     <script src="https://cdn.tailwindcss.com"></script>
-     
+    
+    <script>
+        // Immediately apply the theme from localStorage or user preference
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    
      <script>
         tailwind.config = {
             darkMode: 'class',
@@ -95,8 +104,8 @@
     
     <style>
     :root {
-        --tw-bg-opacity: 1;
-        --bg-gray-800: #2e3440 !important; 
+        /* --tw-bg-opacity: 1;
+        --bg-gray-800: #2e3440 !important;  */
     }
 
     /* Header */
@@ -138,30 +147,12 @@
         }
     </style>
 
+
+
 </head>
 <body>
 
 
-    
-    <!-- <header id="navbar">-->
-    <!--    <nav>-->
-    <!--        <div class="logo"><img src="/graphics/logo-ejmedia.webp" alt="EJMEDIA.CA" class="logo-image"></div>-->
-    <!--        <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>-->
-    <!--        <ul id="nav-links" class="nav-links">-->
-    <!--            <li><i class="fas fa-home"></i> <a href="/">Home</a></li>-->
-    <!--            <li><i class="fas fa-blog"></i> <a href="/blog-main.html">Blog</a></li>-->
-    <!--            <li><i class="fas fa-wrench"></i> <a href="/tools.html">Tools</a></li>-->
-    <!--            <li><i class="fas fa-info-circle"></i> <a href="#">About</a></li>-->
-    <!--            <li><i class="fas fa-envelope"></i> <a href="#">Contact</a></li>-->
-    <!--        </ul>-->
-    <!--    </nav>-->
-        
-    <!--    <div id="update-banner">-->
-    <!--        🚀 We're updating our website for a consistent experience across all pages and tools. Please bear with us.-->
-    <!--        <button id="close-banner" onclick="closeBanner()">X</button>-->
-    <!--    </div>-->
-        
-    <!--</header>-->
     
     <header>
     <nav class="bg-white border-b border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800 fixed w-full top-0 left-0 shadow-md z-50">
@@ -199,6 +190,12 @@
                     <li>
                         <a href="/index.html#contactus" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
                     </li>
+                    <li>
+                      <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+                      <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                      <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                      </button>
+                  </li>
                 </ul>
             </div>
         </div>
@@ -207,24 +204,38 @@
     
 
     
-
-
-
-   
-   
-    
- <script>
-    document.documentElement.classList.add('dark');
-        // // On page load or when changing themes, best to add inline in `head` to avoid FOUC
-        // if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        //     document.documentElement.classList.add('dark');
-        // } else {
-        //     document.documentElement.classList.remove('dark')
-        // }
-    </script>
-
-
-
-    
     <!--<div class="page-wrapper">-->
     <!--<div class="main-container">-->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let themeToggleBtn = document.getElementById('theme-toggle');
+            let themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+            let themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+            function updateThemeIcons() {  // Helper function
+                if (document.documentElement.classList.contains('dark')) {
+                    themeToggleLightIcon.classList.remove('hidden');
+                    themeToggleDarkIcon.classList.add('hidden');
+                } else {
+                    themeToggleLightIcon.classList.add('hidden');
+                    themeToggleDarkIcon.classList.remove('hidden');
+                }
+            }
+
+            updateThemeIcons(); // Set initial icon state
+
+            themeToggleBtn.addEventListener('click', function() {
+                document.documentElement.classList.toggle('dark'); // Toggle the class directly
+
+                if (document.documentElement.classList.contains('dark')) {
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    localStorage.setItem('color-theme', 'light');
+                }
+
+                updateThemeIcons(); // Update icons after toggle
+            });
+        });
+
+</script>
