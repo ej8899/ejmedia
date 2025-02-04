@@ -14,12 +14,17 @@
   }
 </STYLE>
 
+
+  <section class="bg-white dark:bg-gray-800">
+    <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
+        
 <div class="content-wrapper">
-    <h2>Shortened URL Expander & Virus Scan</h2>
-    
+     <h2 class="text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">Shortened URL Expander & Virus Scan</h2>
+     <hr class="mb-2">
     <div>
       <div style="display: flex; align-items: center;">
-        <input type="text" id="shortUrl" placeholder="http://example.com" style="color: gray; margin-right: 10px;">
+         
+        <input type="text" id="shortUrl" placeholder="http://example.com" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light mr-2">
         <button class="btn-nord btn-nord-primary" onclick="expandUrl()" style="white-space: nowrap;">Expand & Scan</button>
       </div>
       <p id="errorMessage" style="color: red; display: none; font-weight: bold;"></p>
@@ -38,6 +43,10 @@
     <div id="outputContainer">
     </div>
   </div>
+  
+  </div>
+  </section>
+  
     <script>
       const debugMode = false;
      
