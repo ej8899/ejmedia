@@ -79,6 +79,7 @@ function is_valid_image($url) {
     margin: auto;
     padding: 20px;
     font-family: Arial, sans-serif;
+    margin-top: 4rem;
   }
   .article-header {
     display: flex;
