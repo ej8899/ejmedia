@@ -49,7 +49,10 @@
                   </li>
                   <li class="mb-4">
                       <a href="#" class="hover:underline">Tech Tutoring</a>
-                  </li>                  
+                  </li>
+                 <li class="mb-4">
+                      <a href="#" class="hover:underline">Wordpress</a>
+                  </li>  
               </ul>
           </div>
           <div class="lg:mx-auto">
