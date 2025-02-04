@@ -1,3 +1,5 @@
 <FilesMatch "\.html$">
   SetHandler application/x-httpd-php
 </FilesMatch>
+
+ErrorDocument 404 /404.html
