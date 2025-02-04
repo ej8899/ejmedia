@@ -1,10 +1,10 @@
+<!-- close out the main page container and wrappers -->
+<!--</div> -->
+<!--</div> -->
 
-</div> <!-- closes main-container -->
-</div> <!-- closes page wrapper -->
 
 
-
-<footer class="bg-gray-50 dark:bg-gray-800 mt-10">
+<footer class="bg-gray-50 dark:bg-gray-800 mt-20">
 <div class="footer-divider">
   <div class="custom-shape-divider-bottom-1738417448">
         <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
