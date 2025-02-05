@@ -106,9 +106,7 @@
       flex: 1;
   }
   
-    .read-article {
-        
-    }
+
     
     .read-label {
         display: inline-block;
@@ -134,7 +132,7 @@
 </section>
 
 <script>
-    fetchNews();
+ 
     function fetchNews() {
         const keyword = "cybersecurity";
         const resultsContainer = document.getElementById("news-results");
@@ -166,6 +164,7 @@
                 console.error("Error fetching news:", error);
             });
     }
+    fetchNews();
 
     function formatDate(inputDate) {
         const now = new Date();
@@ -248,13 +247,13 @@
                 articleDiv.innerHTML = `
                         
         <a href="https://ejmedia.ca/cyber-news-article.php?article_id=${article.article_id}"   class="article grid grid-cols-1 md:grid-cols-[160px_1fr] bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-600 dark:hover:bg-gray-500 w-full mb-4">
-    <div class="relative md:h-full"> <img class="object-cover w-full h-full rounded-t-lg md:rounded-none md:rounded-s-lg" src="${article.image_url}" alt=""> </div>
-    <div class="flex flex-col justify-between p-0 ml-4 leading-normal w-full article-text">
-        ${keywordsHTML}
-        <h5 id="${article.article_id}" class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">${truncateTitle(article.headline)}</h5>
-        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">${article.description && article.description !== "null" ? article.description : ""}</p>
-    </div>
-</a>
+        <div class="relative md:h-full"> <img class="object-cover w-full h-full rounded-t-lg md:rounded-none md:rounded-s-lg" src="${article.image_url}" alt=""> </div>
+        <div class="flex flex-col justify-between p-0 ml-4 leading-normal w-full article-text">
+            ${keywordsHTML}
+            <h5 id="${article.article_id}" class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">${truncateTitle(article.headline)}</h5>
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">${article.description && article.description !== "null" ? article.description : ""}</p>
+        </div>
+    </a>
 
               
                 `;

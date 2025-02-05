@@ -130,7 +130,7 @@ function is_valid_image($url) {
   .ai-disclaimer {
     background-color: var(--nord1);
     color: var(--nord4);
-    font-size: 0.85em;
+    font-size: 0.75em;
     padding: 8px;
     border-left: 4px solid var(--nord10);
     margin-bottom: 10px;
@@ -139,33 +139,43 @@ function is_valid_image($url) {
 
 </style>
 
-<div class="article-container">
-    <div><a href="https://ejmedia.ca/cyber-news.html"><i class="fa-solid fa-arrow-left"></i> Back to News Feed</a></div>
-    <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white"><?php echo $headline; ?></h1>
-    <p class="article-meta">
-      Source: 
-      <?php if ($source_url): ?>
-        <a href="<?php echo $source_url; ?>" target="_blank">
-          <?php echo $source_name; ?>
-        </a>
-      <?php endif; ?>
-      | Retrieved on: <?php echo $retrieved_date; ?>
-    </p>
-    
-    <?php if (!empty($clean_keywords)): ?>
-      <div class="keyword-container">
-        <strong>Keywords:</strong>
-        <?php foreach ($clean_keywords as $keyword): ?>
-          <span class="bg-primary-100 text-primary-800 text-sm font-medium mr-3 px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800 mb-3"><?php echo htmlspecialchars($keyword); ?></span>
-        <?php endforeach; ?>
-      </div>
-    <?php endif; ?>
-    
-    <?php if (!empty($image_url) && is_valid_image($image_url)): ?>
-        <img src="<?php echo $image_url; ?>" alt="Article Image" class="article-image" />
-    <?php endif; ?>
 
-    <p><?php echo $description; ?></p>
+<main class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased">
+  <div class="flex justify-between px-4 mx-auto max-w-screen-xl ">
+      <article class="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
+          <header class="mb-4 lg:mb-6 not-format">
+              <div><a href="https://ejmedia.ca/cyber-news.html"><i class="fa-solid fa-arrow-left"></i> Back to News Feed</a></div>
+              <address class="flex items-center mb-6 mt-4 not-italic">
+                  <div class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
+                      <div>
+                           <?php if ($source_url): ?>
+                            <a href="<?php echo $source_url; ?>" target="_blank">
+                              source: <?php echo $source_name; ?>
+                            </a>
+                          <?php endif; ?>
+                          <p class="text-base text-gray-500 dark:text-gray-400">
+                              Retrieved on: <?php echo $retrieved_date; ?>
+                          </p>
+                      </div>
+                  </div>
+              </address>
+              <?php if (!empty($clean_keywords)): ?>
+                  <div class="keyword-container">
+                    <strong>Keywords:</strong>
+                    <?php foreach ($clean_keywords as $keyword): ?>
+                      <span class="bg-primary-100 text-primary-800 text-sm font-medium mr-3 px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800 mb-3"><?php echo htmlspecialchars($keyword); ?></span>
+                    <?php endforeach; ?>
+                  </div>
+                <?php endif; ?>
+              <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white"><?php echo $headline; ?></h1>
+          </header>
+          <?php if (!empty($image_url) && is_valid_image($image_url)): ?>
+                <figure><img src="<?php echo $image_url; ?>" alt="Article Image" class="article-image" /></figure>
+            <?php endif; ?>
+            
+                
+
+    <p class="mb-4"><?php echo $description; ?></p>
     <?php if (!empty($article_data['url'])): ?>
       <p><a href="<?php echo htmlspecialchars($article_data['url']); ?>" target="_blank">Read full article here...</a></p>
     <?php endif; ?>
@@ -175,7 +185,7 @@ function is_valid_image($url) {
     <?php if (!empty($impact_smb)): ?>
       <div class="impact-section">
         <div class="ai-disclaimer">
-          <strong>Note:</strong> This summary is AI-generated. While we strive for accuracy, please verify critical details independently.
+          This summary is AI-generated.<br>While we strive for accuracy, please verify critical details independently.
         </div>
         <h3>Impact on Small/Medium Businesses</h3>
         <hr>
@@ -186,7 +196,7 @@ function is_valid_image($url) {
     <?php if (!empty($impact_cyber)): ?>
       <div class="impact-section">
         <div class="ai-disclaimer">
-          <strong>Note:</strong> This summary is AI-generated. While we strive for accuracy, please verify critical details independently.
+          This summary is AI-generated.<br>While we strive for accuracy, please verify critical details independently.
         </div>
         <h3> Impacts for Cybersecurity Specialists</h3>
         <hr>
@@ -194,5 +204,19 @@ function is_valid_image($url) {
       </div>
     <?php endif; ?>
 </div>
+            
+        </article>
+    </div>
+</main>
+     
+          
+          
+
+
+
+    
+    
+    
+
 
 <?php include "./footer.php"; ?>
