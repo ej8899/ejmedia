@@ -185,7 +185,12 @@
     }
 
 
-
+    function truncateText(text, maxWords = 30) {
+        if (!text) return "";
+        const words = text.split(" ");
+        if (words.length <= maxWords) return text;
+        return words.slice(0, maxWords).join(" ") + "...";
+    }
 
 
     function truncateTitle(title, maxLength = 62) {
@@ -251,7 +256,7 @@
         <div class="flex flex-col justify-between p-0 ml-4 leading-normal w-full article-text">
             ${keywordsHTML}
             <h5 id="${article.article_id}" class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">${truncateTitle(article.headline)}</h5>
-            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">${article.description && article.description !== "null" ? article.description : ""}</p>
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">${truncateText(article.description)}</p>
         </div>
     </a>
 
